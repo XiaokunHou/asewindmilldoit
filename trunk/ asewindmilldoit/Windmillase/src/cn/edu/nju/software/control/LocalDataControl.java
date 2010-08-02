@@ -109,7 +109,7 @@ public ArrayList<Contact> getContact(){
 			System.out.println("写入本地文件错误");
 		}
    }
-public void uploadData(){
+public void uploadData(Object x){
 	
 	   //本地用户操作的同时uploadData
    }
