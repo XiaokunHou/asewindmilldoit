@@ -55,9 +55,9 @@ public class Project {
    public int findTask(Task x){
 	   //根据Task的name找到tasks中的所在Task并return
 	   index=0;
-			do{
+			while(!(tasks.get(index).gettaskname()).equals(x.gettaskname())){
 				index++;
-			}while(!(tasks.get(index).gettaskname()).equals(x.gettaskname()));
+			}
 	   
 	   return index;
    }

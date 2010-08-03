@@ -51,7 +51,7 @@ public class ProjectBox extends CollectBox{
 			}
 			projects.add(m);
 		}
-
+		writeProjectInFile(); //Ð´ÈëÎÄ¼þ
 	}
 	
 	
