@@ -20,6 +20,7 @@ public class ProjectBox extends CollectBox{
    
 	public void setTaskList(LocalDataControl x){
 		dc=x;
+		alltask=x.getTask();
 	}
 	public void setCurrentProject(Project x){
 		currentProject=x;
@@ -97,11 +98,10 @@ public class ProjectBox extends CollectBox{
 		// TODO Auto-generated method stub
 		for(int i=0;i<alltask.size();i++){
 			if(alltask.get(i).getisdelete()){
-				currentProject.removeTaskFrompro(alltask.get(i));
-				writeProjectInFile();
+				alltask.remove(alltask.get(i));
 			}
 		}
-		
+		writeProjectInFile();
 	}
 	
 
