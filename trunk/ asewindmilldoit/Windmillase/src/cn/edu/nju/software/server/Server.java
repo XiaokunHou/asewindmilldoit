@@ -166,12 +166,24 @@ public class Server {
 		}catch(Exception x){
 			System.out.println("Server³õÊ¼TaskÊ§°Ü");
 		}
-			
 			return t;
 		}
 		private Contact creatContact(ResultSet conta) {
 			// TODO Auto-generated method stub
-			return null;
+			Contact con=new Contact();
+			try{
+			String groupname=conta.getString(2);
+			String contactname=conta.getString(3);//±¸×¢Ãû×Ö.
+			String local_username=conta.getString(4);
+			String addr_username=conta.getString(5);
+			con.setgroupname(groupname);
+			con.setcontactname(contactname);
+			con.setlocal_username(local_username);
+			con.setadder_username(addr_username);
+			}catch(Exception x){
+				System.out.println("Server³õÊ¼ContactÊ§°Ü");
+			}
+			return con;
 		}
 		public void doTheServe(Object k){
     		DataBaseFactory fac=new DataBaseFactory(k);
