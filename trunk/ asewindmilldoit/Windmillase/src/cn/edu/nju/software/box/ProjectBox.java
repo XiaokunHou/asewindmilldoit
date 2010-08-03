@@ -12,7 +12,7 @@ public class ProjectBox extends CollectBox{
 
    ArrayList<Task> alltask;
    LocalDataControl dc;
-
+   HashSet pn = new HashSet(); //得到该用户的所有的项目名称
    ArrayList<Project> projects=new ArrayList<Project>();//根据BaseMode里的LocalDataControl取得ArrayList<Task>
    //然后调用本类的spiltIntoProject()方法拆分成很多Project，加进这里
    Project currentProject;//外部GUI点击一个工程模式下一个分类后，会修改这一属性，如点击Project1
@@ -21,7 +21,7 @@ public class ProjectBox extends CollectBox{
 	public void setTaskList(LocalDataControl x){
 		dc=x;
 	}
-   private HashSet pn = new HashSet(); //得到该用户的所有的项目名称
+   
    
 	
 	public void setCurrentProject(Project x){
@@ -42,7 +42,9 @@ public class ProjectBox extends CollectBox{
 		for(Iterator<Task> it = alltask.iterator();it.hasNext();){
 			Task tk = it.next();
 			projectname=tk.getprojectname();
-			
+			while(!pn.contains(projectname)){
+				pn.add(projectname);
+			}
 		}
 		  return projects;
 	}
