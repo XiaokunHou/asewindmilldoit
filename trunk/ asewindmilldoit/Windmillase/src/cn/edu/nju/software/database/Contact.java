@@ -3,27 +3,33 @@ package cn.edu.nju.software.database;
 import java.io.Serializable;
 
 public class Contact extends SqlData implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
+	private String groupname;
 	private String contactname;
-	private String group_isdefault;
+	//private String group_isdefault;
 	//-------------------------------------
 	private int local_id;
 	private int adder_id;
 	//-------------------------------------
 	
-	public Contact(int id,String contactname,String group_isdefault,int local_id,int adder_id){
+	public Contact(int id,String groupname,String contactname,int local_id,int adder_id){
 		this.adder_id=adder_id;
 		this.contactname=contactname;
-		this.group_isdefault=group_isdefault;
+		//this.group_isdefault=group_isdefault;
 		this.id=id;
+		this.groupname=groupname;
 		this.local_id=local_id;
 	}
+	
 	public Contact() {
 		// TODO Auto-generated constructor stub
 	}
-	public void set(int id){
-		
-	}
+
+
 	public int getid(){
 		return id;
 	}
@@ -48,19 +54,19 @@ public class Contact extends SqlData implements Serializable{
 		this.adder_id=adder_id;
 	}
 	
+	public String getgroupname(){
+		return groupname;
+	}
+	
+	public void setgroupname(String groupname){
+		this.groupname=groupname;
+	}
+	
 	public String getcontactname(){
 		return contactname;
 	}
 	
 	public void setcontactname(String contactname){
 		this.contactname=contactname;
-	}
-	
-	public String getgroup_isdefault(){
-		return group_isdefault;
-	}
-	
-	public void setgroup_isdefault(String group_isdefault){
-		this.group_isdefault=group_isdefault;
-	}
+	}	
 }
