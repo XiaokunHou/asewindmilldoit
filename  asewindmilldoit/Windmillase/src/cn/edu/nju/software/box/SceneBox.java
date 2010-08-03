@@ -55,6 +55,11 @@ public class SceneBox extends CollectBox{
 			// TODO Auto-generated method stub
 			
 		}
+		@Override
+		public void emptyRubbish() {
+			// TODO Auto-generated method stub
+			
+		}
 	
 	
 }

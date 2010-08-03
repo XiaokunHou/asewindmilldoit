@@ -28,4 +28,12 @@ public class ContactBox extends CollectBox{
 		
 	}
 
+	@Override
+	public void emptyRubbish() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
 }

@@ -54,6 +54,11 @@ public void editTask(Task x) {
 	// TODO Auto-generated method stub
 	
 }
+@Override
+public void emptyRubbish() {
+	// TODO Auto-generated method stub
+	
+}
 	
 
 	
