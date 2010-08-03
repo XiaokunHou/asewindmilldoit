@@ -3,6 +3,7 @@ package cn.edu.nju.software.control;
 import java.io.*;
 import java.util.ArrayList;
 
+import cn.edu.nju.software.box.CollectBox;
 import cn.edu.nju.software.database.*;
 
 public class LocalDataControl extends Control{
@@ -109,9 +110,11 @@ public ArrayList<Contact> getContact(){
 			System.out.println("写入本地文件错误");
 		}
    }
-public void uploadData(Object x){
+public void uploadData(Object x,CollectBox box){
 	
 	   //本地用户操作的同时uploadData
+	   //传给服务器Object
+	   //调用Switch(Operation);调用CollectBox的相关操作
    }
    public void setData(ArrayList<User> x){
 	   //测试代码
