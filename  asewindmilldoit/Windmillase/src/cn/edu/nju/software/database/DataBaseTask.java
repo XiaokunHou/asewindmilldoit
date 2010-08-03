@@ -53,8 +53,9 @@ public class DataBaseTask extends DataBase{
 	@Override
 	public ResultSet query(Object x) {
 		// TODO Auto-generated method stub
-		task=(Task) x;
-		getDataBaseTask="select * from task where taskname = '" + task.gettaskname()+ "' and username = '" + user.getusername()+ "'";
+		//task=(Task) x;
+		user=(User)x;
+		getDataBaseTask="select * from task where username = '" + user.getusername()+ "'";
 		if(DB.connectDB()){
 			if(DB.query(getDataBaseTask)){
 				return DB.rs;

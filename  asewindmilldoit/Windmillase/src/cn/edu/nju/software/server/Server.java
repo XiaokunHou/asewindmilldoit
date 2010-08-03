@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -74,16 +75,19 @@ public class Server {
     		  while(conta.next()){
     	    	 //把数据库中相关联的联系人初始化出来，这里的ResultSet中的列值
     			 Contact m=creatContact(conta);
+    			 //System.out.println(m.getgroupname()+"contact");
     	    	 listcon.add(m);
     	       }
     		  while(ta.next()){
      	    	 //把数据库中相关联的任务初始化出来，这里的ResultSet中的列值
      	    	 Task kp=creatTask(ta);
+     	    	//System.out.println(kp.gettaskname()+"task111");
      	    	 listtask.add(kp);
      	       }
     		  while(us.next()){
     			  //把数据库中相关联的任务初始化出来，这里的ResultSet中的列值
     			  User ll=creatUser(us);
+    			  //System.out.println(m.getgroupname()+"contact");
     			  listuser.add(ll);
     		  }
     		  int consize=listcon.size();
@@ -102,8 +106,8 @@ public class Server {
     		  /*
     		   * 
     		   */
-    	  }catch(Exception s){
-    		  System.out.println("数据库错误");
+    	  }catch(Exception e){
+    		  e.printStackTrace();
     	  }
     	}
     	private User creatUser(ResultSet us) {
@@ -133,39 +137,47 @@ public class Server {
 		private Task creatTask(ResultSet ta) {
 			// TODO Auto-generated method stub
 			Task t=new Task();
-		try{
-			String name=ta.getString(2);
-			String info=ta.getString(3);
-			String lable=ta.getString(4);
-			Date starttime_temp=ta.getDate(5);
-			Date endtime_temp=ta.getDate(6);
-			boolean isdoing = ta.getBoolean(7);
-			boolean isdone=ta.getBoolean(8);
-			boolean isdelete=ta.getBoolean(9);
-			String username=ta.getString(10);
-			String projectname=ta.getString(11);
-			String scenename=ta.getString(12);
-			String taskpriority=ta.getString(13);
-			String taskshared=ta.getString(14);
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyymmdd");
-			String starttime = sdf.format(starttime_temp);
-			String endtime=sdf.format(endtime_temp);
-			t.setusername(name);
-			t.settaskinformation(info);
-			t.settasklabel(lable);
-			t.settaskstarttime(starttime);
-			t.settaskendtime(endtime);
-			t.setisdoing(isdoing);
-			t.setisdone(isdone);
-			t.setisdelete(isdelete);
-			t.setusername(username);
-			t.setprojectname(projectname);
-			t.setscenename(scenename);
-			t.settaskpriority(taskpriority);
-			t.settaskshared(taskshared);
-		}catch(Exception x){
-			System.out.println("Server初始Task失败");
-		}
+		
+			
+			try {
+				String  taskname = ta.getString(2);
+				String info=ta.getString(3);
+				String lable=ta.getString(4);
+				Date starttime_temp=ta.getDate(5);
+				Date endtime_temp=ta.getDate(6);
+				boolean isdoing = ta.getBoolean(7);
+				boolean isdone=ta.getBoolean(8);
+				boolean isdelete=ta.getBoolean(9);
+				String username=ta.getString(10);
+				String projectname=ta.getString(11);
+				String scenename=ta.getString(12);
+				String taskpriority=ta.getString(13);
+				String taskshared=ta.getString(14);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyymmdd");
+				if(starttime_temp!=null){
+				String starttime = sdf.format(starttime_temp);
+				t.settaskstarttime(starttime);
+				}
+				if(endtime_temp!=null){
+				String endtime=sdf.format(endtime_temp);
+				t.settaskendtime(endtime);
+				}
+				t.settaskname(taskname);
+				t.settaskinformation(info);
+				t.settasklabel(lable);
+				t.setisdoing(isdoing);
+				t.setisdone(isdone);
+				t.setisdelete(isdelete);
+				t.setusername(username);
+				t.setprojectname(projectname);
+				t.setscenename(scenename);
+				t.settaskpriority(taskpriority);
+				t.settaskshared(taskshared);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			return t;
 		}
 		private Contact creatContact(ResultSet conta) {
@@ -189,7 +201,7 @@ public class Server {
     		DataBaseFactory fac=new DataBaseFactory(k);
     	    DataBase x1=fac.creatDataBaseObject();
     	    User pp=(User) k;
-    	   System.out.println(pp.getpassword());
+    	   // System.out.println(pp.getpassword());
     		fac.strategy();//各个DataBase子类做自己的事情
     		String mess=null;
     		boolean insert=fac.inser();
