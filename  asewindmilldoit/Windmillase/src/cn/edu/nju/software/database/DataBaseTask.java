@@ -36,8 +36,8 @@ public class DataBaseTask extends DataBase{
 	public boolean insert(Object x) {
 		// TODO Auto-generated method stub
 		task=(Task) x;
-		getDataBaseTask="insert into task(taskname,username) " +
-						"values('" + task.gettaskname()+ "','"+user.getusername()+"')";
+		getDataBaseTask="insert into task(taskname,taskinfomation,tasklabel,taskstarttime,taskendtime,isdoing,isdone,isdelete,username,projectname,scenename,taskpriority,taskshared) " +
+						"values('" + task.gettaskname()+ "','"+task.gettaskinformation()+"','"+task.gettasklabel()+"','"+task.gettaskstarttime()+"','"+task.gettaskendtime()+"','"+task.getisdoing()+"','"+task.getisdone()+"','"+task.getisdelete()+"','"+user.getusername()+"','"+task.getprojectname()+"','"+task.getscenename()+"','"+task.gettaskpriority()+"','"+task.gettaskshared()+"')";
 		if(DB.connectDB()){
 			if(DB.executeSQL(getDataBaseTask)){
 				System.out.print("²åÈë³É¹¦");
