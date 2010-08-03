@@ -7,6 +7,7 @@ import cn.edu.nju.software.box.CollectBox;
 import cn.edu.nju.software.database.*;
 
 public class LocalDataControl extends Control{
+	User user;
 	private int uid;
 	private ArrayList<Contact> con;
 	private ArrayList<User> users;
@@ -17,8 +18,8 @@ public class LocalDataControl extends Control{
 	ObjectOutputStream ot;
 	ObjectInputStream in;//本地文件流
 	//三个数组可以给GUI直接调用，注GUI的各个BOX完成分类
-   public LocalDataControl(LoginControl x,int ud){
-	   uid=ud;
+   public LocalDataControl(LoginControl x){
+	   
 	   output=x.output;
 	   input=x.input;
 	   con=new ArrayList<Contact>();
@@ -50,7 +51,9 @@ public ArrayList<Contact> getContact(){
 	   return tasks;
    }
    //GUI调用
-   
+   public void setUser(User x){
+	   user=x;
+   }
    public void writeInFile(){
 	   //将信息写入文件，特指初始化本地数据后，用户操作的东西
 	   try {
@@ -76,7 +79,7 @@ public ArrayList<Contact> getContact(){
    }
    private void writeContact() {
 	// TODO Auto-generated method stub
-	int count=con.size();
+	/*int count=con.size();
 	try{
 	for(int i=0;i<count;i++){
 			ot.writeObject(con.get(i));
@@ -84,29 +87,32 @@ public ArrayList<Contact> getContact(){
 		ot.close();
 	}catch(Exception e){
 		System.out.println("写入本地文件错误");
+	}*/
+	   try {
+		ot.writeObject(con);
+		ot.close();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		System.out.println("写入本地文件错误");
 	}
    }
    private void writeTask() {
 	// TODO Auto-generated method stub
-	   int count=tasks.size();
-		try{
-		for(int i=0;i<count;i++){
-				ot.writeObject(tasks.get(i));
-		}
+	   try {
+			ot.writeObject(tasks);
 			ot.close();
-		}catch(Exception e){
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			System.out.println("写入本地文件错误");
 		}
    }
    private void writeUser() {
 	// TODO Auto-generated method stub
-	   int count=users.size();
-		try{
-		for(int i=0;i<count;i++){
-				ot.writeObject(users.get(i));
-		}
+	   try {
+			ot.writeObject(users);
 			ot.close();
-		}catch(Exception e){
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			System.out.println("写入本地文件错误");
 		}
    }
@@ -139,7 +145,7 @@ public void uploadData(Object x,CollectBox box){
    }
    private void readUser() {
 	// TODO Auto-generated method stub
-	  Object k=null;
+	  /*Object k=null;
 	  try{
 	while((k=in.readObject())!=null){
 		User ll=(User) k;
@@ -147,33 +153,52 @@ public void uploadData(Object x,CollectBox box){
 	  }
 	  }catch(Exception x){
 		  System.out.println("读入本地文件错误");
-	  }
+	  }*/
+	  Object k;
+	try {
+		k = in.readObject();
+	    users=(ArrayList<User>) k;
+	    in.close();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		System.out.println("读入本地文件错误");
+	} catch (ClassNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	 
   }
 
    private void readTask() {
 	// TODO Auto-generated method stub
 	   Object k=null;
-		  try{
-		while((k=in.readObject())!=null){
-			Task ll=(Task) k;
-			tasks.add(ll);
-		  }
-		  }catch(Exception x){
-			  System.out.println("读入本地文件错误");
-		  }
+	   try {
+			k = in.readObject();
+		    tasks=(ArrayList<Task>) k;
+		    in.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("读入本地文件错误");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
   }
 
    private void readContact() {
 	// TODO Auto-generated method stub
 	   Object k=null;
-		  try{
-		while((k=in.readObject())!=null){
-			Contact ll=(Contact) k;
-			con.add(ll);
-		  }
-		  }catch(Exception x){
-			  System.out.println("读入本地文件错误");
-		  }
+	   try {
+			k = in.readObject();
+		    con=(ArrayList<Contact>) k;
+		    in.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("读入本地文件错误");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
   }
 
 public void updateLocalData(){
@@ -184,7 +209,7 @@ public void updateLocalData(){
    }
    public void requestSend(){
 		 //会发送String格式具体请求
-		 String request="init/"+uid;
+		 String request="init/"+user.getusername();
 		 try {
 			output.writeObject(request);
 		} catch (IOException e) {
@@ -208,10 +233,13 @@ public void updateLocalData(){
 				   }
                    if(s=="cn.edu.nju.software.database.Task"){
 					   Task pp=(Task) ko;
+					   //System.out.println(pp.gettaskname()+"localdatacontrol");
 					   tasks.add(pp);
 				   }
-                 writeInFile();
+                   writeInFile();
 			   }
+			// writeInFile();
+			// input.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

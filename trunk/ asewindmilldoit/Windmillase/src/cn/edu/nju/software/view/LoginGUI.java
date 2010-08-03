@@ -20,6 +20,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
+import cn.edu.nju.software.control.LocalDataControl;
 import cn.edu.nju.software.control.LoginControl;
 import cn.edu.nju.software.control.Control.Operation;
 import cn.edu.nju.software.control.LoginControl.Login;
@@ -56,6 +57,8 @@ public class LoginGUI extends JFrame{
 	private JButton login;
 	private  JButton sign;
 	LoginControl control=new LoginControl();//登陆控制
+	User us;//一个登陆完成后生成一个user对象
+	LocalDataControl localcontrol;//本地数据缓存
 	boolean online=false;
 	boolean lo=false;//登陆或失败都会为true
 	public LoginGUI(){
@@ -207,6 +210,11 @@ public class LoginGUI extends JFrame{
 			case SUCCESS:
 				System.out.println("登陆成功");
 				getFaultLabel().setText("");
+				System.out.println("更新用户数据");
+				localcontrol=new LocalDataControl(control);
+				//System.out.println(us.getusername()+"更新");
+				localcontrol.setUser(us);
+				localcontrol.updateLocalData();
 				//new MainFrame();
 				lo=true;
 				break;
@@ -239,7 +247,7 @@ public class LoginGUI extends JFrame{
 			String password = turnCharsToString(passwords);
 			//与LoginControl交互
 			control.logi=Login.WAITING;
-			User us=new User();
+			us=new User();
 			us.setInfo(name, password);
 			us.setOpration(Operation.QUERY);
 		    online=	control.getLogin(us);

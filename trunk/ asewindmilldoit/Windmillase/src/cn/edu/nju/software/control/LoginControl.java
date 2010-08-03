@@ -78,9 +78,9 @@ public class LoginControl extends Control implements Runnable{
 						logi=Login.SUCCESS;
 						//gui.loginSuccess();
 						//System.out.println("woca");
-						soc.close();
-						input.close();
-						output.close();
+				      /*    soc.close();
+						    input.close();
+						    output.close();*/
 						break;
 					}
 				}

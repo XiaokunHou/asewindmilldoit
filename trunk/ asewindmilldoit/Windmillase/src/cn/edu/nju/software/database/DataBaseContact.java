@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 public class DataBaseContact extends DataBase{
     private Contact con;
-    //private User user;
+    private User user;
     
     private String getDataBaseContact;
     
@@ -57,8 +57,9 @@ public class DataBaseContact extends DataBase{
 	@Override
 	public ResultSet query(Object x) {
 		// TODO Auto-generated method stub
-		con=(Contact) x;
-		getDataBaseContact="select * from contact where loacl_username = '" + con.getlocal_username()+ "'";
+		//con=(Contact) x;
+		user=(User)x;
+		getDataBaseContact="select * from contact where local_username = '" + user.getusername()+ "'";
 		if(DB.connectDB()){
 			if(DB.query(getDataBaseContact)){
 				return DB.rs;
