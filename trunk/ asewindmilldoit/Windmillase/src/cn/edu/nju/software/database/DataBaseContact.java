@@ -37,6 +37,8 @@ public class DataBaseContact extends DataBase{
 	public boolean insert(Object x) {
 		// TODO Auto-generated method stub
 		con=(Contact) x;
+		boolean hasthecontact;
+		
 		getDataBaseContact="insert into contact(groupname,contactname,local_id,adder_id) " +
 		"values('" +con.getgroupname()+"','"+con.getcontactname()+"','"+con.getlocal_id()+ "','"+con.getadder_id()+"')";
 		if(DB.connectDB()){
