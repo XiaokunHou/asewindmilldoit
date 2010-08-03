@@ -12,17 +12,17 @@ public class Contact extends SqlData implements Serializable{
 	private String contactname;
 	//private String group_isdefault;
 	//-------------------------------------
-	private int local_id;
-	private int adder_id;
+	private String local_username;
+	private String adder_username;
 	//-------------------------------------
 	
-	public Contact(int id,String groupname,String contactname,int local_id,int adder_id){
-		this.adder_id=adder_id;
+	public Contact(int id,String groupname,String contactname,String local_username,String adder_username){
+		this.adder_username=adder_username;
 		this.contactname=contactname;
 		//this.group_isdefault=group_isdefault;
 		this.id=id;
 		this.groupname=groupname;
-		this.local_id=local_id;
+		this.local_username=local_username;
 	}
 	
 	public Contact() {
@@ -38,20 +38,20 @@ public class Contact extends SqlData implements Serializable{
 		this.id=id;
 	}
 	
-	public int getlocal_id(){
-		return local_id;
+	public String getlocal_username(){
+		return local_username;
 	}
 	
-	public void setlocal_id(int local_id){
-		this.local_id=local_id;
+	public void setlocal_username(String local_username){
+		this.local_username=local_username;
 	}
 	
-	public int getadder_id(){
-		return adder_id;
+	public String getadder_username(){
+		return adder_username;
 	}
 	
-	public void setadder_id(int adder_id){
-		this.adder_id=adder_id;
+	public void setadder_username(String adder_username){
+		this.adder_username=adder_username;
 	}
 	
 	public String getgroupname(){
