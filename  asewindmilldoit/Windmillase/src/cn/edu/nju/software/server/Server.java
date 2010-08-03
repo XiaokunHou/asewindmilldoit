@@ -2,7 +2,9 @@ package cn.edu.nju.software.server;
 
 import java.io.*;
 import java.net.*;
+import java.sql.Date;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import cn.edu.nju.software.control.Control.Operation;
@@ -70,15 +72,18 @@ public class Server {
     		  ArrayList<Task> listtask=new ArrayList<Task>();
     		  ArrayList<User> listuser=new ArrayList<User>();
     		  while(conta.next()){
-    	    	 Contact m=new Contact();//把数据库中相关联的联系人初始化出来，这里的ResultSet中的列值
+    	    	 //把数据库中相关联的联系人初始化出来，这里的ResultSet中的列值
+    			 Contact m=creatContact(conta);
     	    	 listcon.add(m);
     	       }
     		  while(ta.next()){
-     	    	 Task kp=new Task();//把数据库中相关联的任务初始化出来，这里的ResultSet中的列值
+     	    	 //把数据库中相关联的任务初始化出来，这里的ResultSet中的列值
+     	    	 Task kp=creatTask(ta);
      	    	 listtask.add(kp);
      	       }
     		  while(us.next()){
-    			  User ll=new User();//把数据库中相关联的任务初始化出来，这里的ResultSet中的列值
+    			  //把数据库中相关联的任务初始化出来，这里的ResultSet中的列值
+    			  User ll=creatUser(us);
     			  listuser.add(ll);
     		  }
     		  int consize=listcon.size();
@@ -101,7 +106,69 @@ public class Server {
     		  System.out.println("数据库错误");
     	  }
     	}
-    	public void doTheServe(Object k){
+    	private User creatUser(ResultSet us) {
+			// TODO Auto-generated method stub
+			User u=new User();
+			try{
+			String name=us.getString(2);
+			String passd=us.getString(3);
+			String nickname=us.getString(4);
+			String email=us.getString(5);
+			String sex=us.getString(6);
+			String birthday=us.getString(7);
+			String remark=us.getString(8);
+			u.setusername(name);
+			u.setpassword(passd);
+			u.setunickname(nickname);
+			u.setuemail(email);
+			u.setubirthday(birthday);
+			u.setusex(sex);
+			u.seturemark(remark);
+			}catch(Exception x){
+				System.out.println("Server初始User失败");
+			}
+			
+			return u;
+		}
+		private Task creatTask(ResultSet ta) {
+			// TODO Auto-generated method stub
+			Task t=new Task();
+		try{
+			String name=ta.getString(2);
+			String info=ta.getString(3);
+			String lable=ta.getString(4);
+			Date starttime_temp=ta.getDate(5);
+			Date endtime_temp=ta.getDate(6);
+			boolean isdoing = ta.getBoolean(7);
+			boolean isdone=ta.getBoolean(8);
+			boolean isdelete=ta.getBoolean(9);
+			String username=ta.getString(10);
+			String projectname=ta.getString(11);
+			String scenename=ta.getString(12);
+			String taskpriority=ta.getString(13);
+			String taskshared=ta.getString(14);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyymmdd");
+			String starttime = sdf.format(starttime_temp);
+			String endtime=sdf.format(endtime_temp);
+			t.setusername(name);
+			t.settaskinformation(info);
+			t.settasklabel(lable);
+			t.settaskstarttime(starttime);
+			t.settaskendtime(endtime);
+			t.setisdoing(isdoing);
+			t.setisdone(isdone);
+			t.setisdelete(isdelete);
+		}catch(Exception x){
+			System.out.println("Server初始Task失败");
+		}
+			
+			
+		}
+		private Contact creatContact(ResultSet conta) {
+			// TODO Auto-generated method stub
+			
+		}
+		public void doTheServe(Object k){
     		DataBaseFactory fac=new DataBaseFactory(k);
     	    DataBase x1=fac.creatDataBaseObject();
     	    User pp=(User) k;
