@@ -9,10 +9,10 @@ public class Scene {
 	String name;//情景名字
 	public String getName(){
 		   return name;
-	   }
-	   public void setName(String x){
+	}
+	public void setName(String x){
 		   name=x;
-	   }
+	}
 	   public void addTaskInScene(Task x){
 		  
 		   //add的时候可以直接tasks.add()
