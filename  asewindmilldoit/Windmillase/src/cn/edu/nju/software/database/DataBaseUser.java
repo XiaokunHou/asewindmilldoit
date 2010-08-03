@@ -1,60 +1,90 @@
 package cn.edu.nju.software.database;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Statement;
-
-import Test.SqlConnect;
 
 public class DataBaseUser extends DataBase{
     private User user;
-    private Connection conn;
+    //ResultSet rs;
+    
+    private String getDataBaseUser;
+    
+    public DataBaseUser(){
+    	
+    }
+    
+    public User getUser(String username,String password){
+    	return user;
+    }
+    
 	@Override
 	public void delete(Object x) {
 		// TODO Auto-generated method stub
-		
+		user=(User) x;
+		getDataBaseUser="delete from user where username = '" + user.getusername()+ "'";
+		if(DB.connectDB()){
+			if(DB.executeSQL(getDataBaseUser)){
+				System.out.print("删除成功");
+				return;
+			}else{
+				System.out.print("删除失败");
+				return;
+			}
+		}
 	}
 
 	@Override
 	public boolean insert(Object x) {
 		// TODO Auto-generated method stub
-		boolean success=false;
 		user=(User) x;
-		String url="insert into user (name,passd,email) values ('"+user.name+"','"+user.password+"','"+user.email+"')";
-		try{  
-			  conn=SqlConnect.getConn();
-			  Statement ste=conn.createStatement();
-			  ste.executeUpdate(url);
-			  success=true;
-		  }catch(Exception t){
-			  System.out.println("数据库插入User失败");
-		  }
-		  
-		return success;
+		getDataBaseUser="insert into user(username,password,uemail) " +
+				"values('" + user.getusername()+ "','"+user.getpassword()+"','"+user.getuemail()+"')";
+		if(DB.connectDB()){
+			if(DB.executeSQL(getDataBaseUser)){
+				System.out.print("插入成功");
+				return true;
+			}else{
+				System.out.print("插入失败");
+				return false;
+			}
+		}else
+		return false;
 	}
 
 	@Override
 	public ResultSet query(Object x) {
 		// TODO Auto-generated method stub
-		user=(User)x;
-		ResultSet res=null;
-		String url="select * from user where name='"+user.name+"' and passd='"+user.password+"'";
-		try{  
-			  conn=SqlConnect.getConn();
-			  Statement ste=conn.createStatement();
-			  res=ste.executeQuery(url);
-			  
-		  }catch(Exception t){
-			  System.out.println("数据库查User失败");
-		  }
-		  
-		return res;
+		user=(User) x;
+		getDataBaseUser="select * from user where username = '" + user.getusername()+ "' and password = '" + user.getpassword()+ "'";
+		if(DB.connectDB()){
+			if(DB.query(getDataBaseUser)){
+				return DB.rs;
+			}else
+				return null;
+		}else
+		return null;
+		
 	}
 
 	@Override
 	public void update(Object x) {
 		// TODO Auto-generated method stub
-		
+		user=(User) x;
+		getDataBaseUser="update user set usernickname = '" + user.getunickname()
+						+ "' and password= '"+user.getpassword()
+						+"' and uemail= '"+user.getuemail()
+						+"' and usex= '"+user.getusex()
+						+"' and ubirthday= '"+user.getubirthday()
+						+"' and uremark= '"+user.geturemark()
+						+"' where username = '" + user.getusername()+ "'";
+		if(DB.connectDB()){
+			if(DB.executeSQL(getDataBaseUser)){
+				System.out.print("修改成功");
+				return;
+			}else{
+				System.out.print("修改失败");
+				return;
+			}
+		}
 	}
 
 	@Override
@@ -62,5 +92,5 @@ public class DataBaseUser extends DataBase{
 		// TODO Auto-generated method stub
 		user=(User) x;
 	}
-	
+
 }

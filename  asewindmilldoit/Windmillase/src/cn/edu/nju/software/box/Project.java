@@ -6,12 +6,12 @@ import cn.edu.nju.software.database.Task;
 
 public class Project {
    ArrayList<Task> tasks=new ArrayList<Task>();
-   String name;//工程名字
-   public String getName(){
-	   return name;
+   String projectname;//工程名字
+   public String getProjectName(){
+	   return projectname;
    }
-   public void setName(String x){
-	   name=x;
+   public void setProjectName(String x){
+	   projectname=x;
    }
    public void addTaskInpro(Task x){
 	   //add的时候可以直接tasks.add()

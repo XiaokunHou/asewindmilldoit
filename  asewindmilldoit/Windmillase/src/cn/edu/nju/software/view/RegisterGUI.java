@@ -341,7 +341,7 @@ public class RegisterGUI extends JFrame{
 				recontrol.reg=Register.WAITING;
 				User us=new User();
 				us.setInfo(name, password);
-				us.email=mailAddress;
+				us.setuemail(mailAddress);
 				us.setOpration(Operation.INSERT);
 				recontrol.getRegister(us);
 				Thread x=new Thread(recontrol);

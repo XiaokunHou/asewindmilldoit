@@ -55,10 +55,10 @@ public class Server {
     			System.out.println("建立输入输出流错误");
     		}
     	}
-    	public void clientDeal(String uname){
+    	public void clientDeal(String username){
     		//int x=Integer.parseInt(uid);
     		User user=new User();
-    		user.name=uname;
+    		user.setusername(username);
     		DataBaseContact con=new DataBaseContact();
     		DataBaseTask task=new DataBaseTask();
     		DataBaseUser ufac=new DataBaseUser();
@@ -104,8 +104,8 @@ public class Server {
     	public void doTheServe(Object k){
     		DataBaseFactory fac=new DataBaseFactory(k);
     	    DataBase x1=fac.creatDataBaseObject();
-    	    //User pp=(User) k;
-    	   // System.out.println(x1.getClass().getName());
+    	    User pp=(User) k;
+    	   System.out.println(pp.getpassword());
     		fac.strategy();//各个DataBase子类做自己的事情
     		String mess=null;
     		boolean insert=fac.inser();
