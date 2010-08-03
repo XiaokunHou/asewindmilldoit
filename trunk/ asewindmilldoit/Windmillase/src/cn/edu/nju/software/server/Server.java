@@ -158,15 +158,20 @@ public class Server {
 			t.setisdoing(isdoing);
 			t.setisdone(isdone);
 			t.setisdelete(isdelete);
+			t.setusername(username);
+			t.setprojectname(projectname);
+			t.setscenename(scenename);
+			t.settaskpriority(taskpriority);
+			t.settaskshared(taskshared);
 		}catch(Exception x){
 			System.out.println("Server≥ı ºTask ß∞‹");
 		}
 			
-			
+			return t;
 		}
 		private Contact creatContact(ResultSet conta) {
 			// TODO Auto-generated method stub
-			
+			return null;
 		}
 		public void doTheServe(Object k){
     		DataBaseFactory fac=new DataBaseFactory(k);
