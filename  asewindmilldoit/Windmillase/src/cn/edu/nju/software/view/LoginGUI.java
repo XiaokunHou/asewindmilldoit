@@ -20,6 +20,12 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
+import cn.edu.nju.software.control.LocalDataControl;
+import cn.edu.nju.software.control.LoginControl;
+import cn.edu.nju.software.control.Control.Operation;
+import cn.edu.nju.software.control.LoginControl.Login;
+import cn.edu.nju.software.database.User;
+
 
 public class LoginGUI extends JFrame{
 	
@@ -50,7 +56,11 @@ public class LoginGUI extends JFrame{
 	private JLabel faultLabel;
 	private JButton login;
 	private  JButton sign;
-	
+	LoginControl control=new LoginControl();//登陆控制
+	User us;//一个登陆完成后生成一个user对象
+	LocalDataControl localcontrol;//本地数据缓存
+	boolean online=false;
+	boolean lo=false;//登陆或失败都会为true
 	public LoginGUI(){
 		
 		this.setSize(width, height);
@@ -194,7 +204,23 @@ public class LoginGUI extends JFrame{
 			String name = userText.getText();
 			char[] passwords = passwordText.getPassword();
 			String password = turnCharsToString(passwords);
-			boolean s = true;
+			//与LoginControl交互
+			control.logi=Login.WAITING;
+			us=new User();
+			us.setInfo(name, password);
+			us.setOpration(Operation.QUERY);
+		    online=	control.getLogin(us);
+		    if(online){
+		    	System.out.println("联网成功");
+		    }
+		    else{
+		    	System.out.println("联网失败，载入本地最近数据");
+		    }
+			Thread x=new Thread(control);
+			x.start();
+			Listener p=new Listener();
+			p.start();
+			/*boolean s = true;
 			if(s){
 				setVisible(false);
 				new MainFrame();
@@ -202,7 +228,7 @@ public class LoginGUI extends JFrame{
 			}else{
 				userText.setBorder(new LineBorder(Color.red,1));
 				getFaultLabel().setText("用户名密码不正确");
-			}
+			}*/
 		}
 		
 		private String turnCharsToString(char[] chars){
@@ -223,4 +249,44 @@ public class LoginGUI extends JFrame{
 			setVisible(false);
 		}
 	}
+	class Listener extends Thread{
+		public void run(){
+		while(true){
+			Login x=control.logi;
+			switch(x){
+			case SUCCESS:
+				System.out.println("登陆成功");
+				//getFaultLabel().setText("");
+				setVisible(false);
+				new MainFrame();
+				MainFrame.crd.first(MainFrame.mainPanel);
+				localcontrol=new LocalDataControl(control);
+				localcontrol.setUser(us);
+				localcontrol.updateLocalData();
+				lo=true;
+				break;
+			case FAILED:
+				System.out.println("登陆失败");
+				userText.setBorder(new LineBorder(Color.red,1));
+				getFaultLabel().setText("用户名密码错误");
+				lo=true;
+				break;
+			case WAITING:
+				System.out.println("登陆中");
+				lo=false;
+				break;
+			 }
+			if(lo){
+				break;
+			  }
+			}
+		while(!localcontrol.getDataComplete()){
+			System.out.println("更新数据中");
+		  }
+		if(localcontrol.getDataComplete()){
+			System.out.println("更新完毕");
+		 }
+		}
+	}
+	//Listener类为执行登陆后方法
 }
