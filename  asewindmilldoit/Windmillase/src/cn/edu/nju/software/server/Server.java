@@ -142,6 +142,7 @@ public class Server {
 		
 			
 			try {
+				int id=ta.getInt(1);
 				String  taskname = ta.getString(2);
 				String info=ta.getString(3);
 				String lable=ta.getString(4);
@@ -164,6 +165,7 @@ public class Server {
 				String endtime=sdf.format(endtime_temp);
 				t.settaskendtime(endtime);
 				}
+				t.setid(id);
 				t.settaskname(taskname);
 				t.settaskinformation(info);
 				t.settasklabel(lable);
