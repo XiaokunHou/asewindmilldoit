@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import cn.edu.nju.software.control.LocalDataControl;
+import cn.edu.nju.software.database.SqlData;
 import cn.edu.nju.software.database.Task;
 
 public class SceneBox extends CollectBox{
@@ -19,14 +20,12 @@ public class SceneBox extends CollectBox{
 	   //然后调用本类的spiltIntoScene()方法拆分成很多Scene，加进这里
 	 Scene currentScene;//外部GUI点击一个情景模式下一个分类后，会修改这一属性，如点击办公室
 	   
-		public void setTaskList(LocalDataControl x){
-			//SceneMode调用，传入LocalDataControl的Task数组
-			//本方法联网时候调用
-			dc=x;
-			alltask=x.getTask();
-		}
 		public void setCurrentScene(Scene x){
-			currentScene=x;
+			for(int i=0;i<scenes.size();i++){
+				if(scenes.get(i).getSceneName().equals(x.getSceneName())){
+					currentScene=scenes.get(i);
+				}
+			}
 		}
 		public void spiltIntoScene(){
 			//联网时候调用
@@ -85,40 +84,43 @@ public class SceneBox extends CollectBox{
 			 }
 		}
 		//下面是给GUI接口，在一个模式的分类下增删等操作
+		
 		@Override
-		public void addTask(Task x) {
+		public void add(SqlData x) {
 			// TODO Auto-generated method stub
-			currentScene.addTaskInScene(x);
+			Task tk = (Task)x;
+			currentScene.addTaskInScene(tk);
+			writeSceneInFile();
+			
+		}
+		@Override
+		public void complete(SqlData x) {
+			// TODO Auto-generated method stub
+			Task tk = (Task)x;
+			currentScene.completeTaskInScene(tk);
 			writeSceneInFile();
 		}
 		@Override
-		public void completeTask(Task x) {
+		public void delete(SqlData x) {
 			// TODO Auto-generated method stub
-			currentScene.completeTaskInScene(x);
+			Task tk = (Task)x;
+			currentScene.deleteTaskInScene(tk);
 			writeSceneInFile();
 		}
 		@Override
-		public void deleteTask(Task x) {
+		public void edit(SqlData x) {
 			// TODO Auto-generated method stub
-			currentScene.deleteTaskInScene(x);
+			Task tk = (Task)x;
+			currentScene.editTaskInScene(tk);
 			writeSceneInFile();
 		}
 		@Override
-		public void editTask(Task x) {
+		public void setLocalDataControl(LocalDataControl x) {
 			// TODO Auto-generated method stub
-			currentScene.editTaskInScene(x);
-			writeSceneInFile();
-		}
-		@Override
-		public void emptyRubbish() {
-			// TODO Auto-generated method stub
-			for(int i=0;i<alltask.size();i++){
-				if(alltask.get(i).getisdelete()){
-					//currentProject.removeTaskFrompro(alltask.get(i));
-					alltask.remove(alltask.get(i));
-				}
-			}
-			writeSceneInFile();
+			//SceneMode调用，传入LocalDataControl的Task数组
+			//本方法联网时候调用
+			dc=x;
+			alltask=x.getTask();
 		}
 	
 	

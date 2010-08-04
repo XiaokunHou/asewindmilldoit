@@ -1,13 +1,12 @@
 package cn.edu.nju.software.box;
 
 import java.io.*;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.HashSet;
 import java.util.Iterator;
 
 import cn.edu.nju.software.control.LocalDataControl;
+import cn.edu.nju.software.database.SqlData;
 import cn.edu.nju.software.database.Task;
 
 public class ProjectBox extends CollectBox{
@@ -20,12 +19,13 @@ public class ProjectBox extends CollectBox{
    Project currentProject;//外部GUI点击一个工程模式下一个分类后，会修改这一属性，如点击Project1
   // private String projectname;
    
-	public void setTaskList(LocalDataControl x){
-		dc=x;
-		alltask=x.getTask();
-	}
 	public void setCurrentProject(Project x){
-		currentProject=x;
+		for(int i=0;i<projects.size();i++){
+			if(projects.get(i).getProjectName().equals(x.getProjectName())){
+				currentProject=projects.get(i);
+			}
+		}
+		//currentProject=x;
 	}
 	public void spiltIntoProject(){
 		//联网时候调用
@@ -86,42 +86,41 @@ public class ProjectBox extends CollectBox{
 	}
 
 	//下面是给GUI接口，在一个模式的分类下增删等操作
+
 	@Override
-	public void addTask(Task x) {
+	public void add(SqlData x) {
 		// TODO Auto-generated method stub
-		//currentProject.add(x);
-		currentProject.addTaskInpro(x);
+		Task tk = (Task)x;
+		currentProject.addTaskInpro(tk);
+		writeProjectInFile();
+		
+	}
+	@Override
+	public void complete(SqlData x) {
+		// TODO Auto-generated method stub
+		Task tk = (Task)x;
+		currentProject.completeTaskInpro(tk);
 		writeProjectInFile();
 	}
 	@Override
-	public void completeTask(Task x) {
+	public void delete(SqlData x) {
 		// TODO Auto-generated method stub
-		currentProject.completeTaskInpro(x);
+		Task tk = (Task)x;
+		currentProject.deleteTaskInpro(tk);
 		writeProjectInFile();
 	}
 	@Override
-	public void deleteTask(Task x) {
+	public void edit(SqlData x) {
 		// TODO Auto-generated method stub
-		currentProject.deleteTaskInpro(x);
+		Task tk = (Task)x;
+		currentProject.editTaskInpro(tk);
 		writeProjectInFile();
 	}
 	@Override
-	public void editTask(Task x) {
+	public void setLocalDataControl(LocalDataControl x) {
 		// TODO Auto-generated method stub
-		//外部编辑完任务后点击保存，然后会调用此方法
-		currentProject.editTaskInpro(x);
-		writeProjectInFile();
-	}
-	@Override
-	public void emptyRubbish() {
-		// TODO Auto-generated method stub
-		for(int i=0;i<alltask.size();i++){
-			if(alltask.get(i).getisdelete()){
-				//currentProject.removeTaskFrompro(alltask.get(i));
-				alltask.remove(alltask.get(i));
-			}
-		}
-		writeProjectInFile();
+		dc=x;
+		alltask=x.getTask();
 	}
 	
 

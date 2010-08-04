@@ -10,7 +10,7 @@ import java.util.Iterator;
 
 import cn.edu.nju.software.control.LocalDataControl;
 import cn.edu.nju.software.database.Contact;
-import cn.edu.nju.software.database.Task;
+import cn.edu.nju.software.database.SqlData;
 
 public class ContactBox extends CollectBox{
   
@@ -21,13 +21,13 @@ public class ContactBox extends CollectBox{
 	
 	Group currentGroup;
 	
-	public void setContactList(LocalDataControl x){
-		dc=x;
-		allcontact=x.getContact();
-	}
-	
 	public void setCurrentGroup(Group x){
-		currentGroup=x;
+		//currentGroup=x;
+		for(int i=0;i<groups.size();i++){
+			if(groups.get(i).getContactName().equals(x.getContactName())){
+				currentGroup = groups.get(i);
+			}
+		}
 	}
 	
 	public void spiltIntoGroup(){
@@ -86,51 +86,40 @@ public class ContactBox extends CollectBox{
 	}
 	
 	//下面是给GUI接口，在一个模式的分类下增删等操作
-	public void addContact(Contact x){
-		currentGroup.addContactInGroup(x);
+	@Override
+	public void add(SqlData x) {
+		// TODO Auto-generated method stub
+		Contact con = (Contact)x;
+		currentGroup.addContactInGroup(con);
 		writeGroupInFile();
 	}
-	
-	public void deleteContact(Contact x){
-		currentGroup.deleteContactInGroup(x);
+
+	@Override
+	public void complete(SqlData x) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(SqlData x) {
+		// TODO Auto-generated method stub
+		Contact con = (Contact)x;
+		currentGroup.deleteContactInGroup(con);
 		writeGroupInFile();
 	}
-	
-	public void editContact(Contact x){
-		currentGroup.editContactInGroup(x);
+
+	@Override
+	public void edit(SqlData x) {
+		// TODO Auto-generated method stub
+		Contact con = (Contact)x;
+		currentGroup.editContactInGroup(con);
 		writeGroupInFile();
 	}
-	
-	@Override
-	public void addTask(Task x) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
-	public void completeTask(Task x) {
+	public void setLocalDataControl(LocalDataControl x) {
 		// TODO Auto-generated method stub
-		
+		dc=x;
+		allcontact=x.getContact();
 	}
-
-	@Override
-	public void deleteTask(Task x) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void editTask(Task x) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void emptyRubbish() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-
 }
