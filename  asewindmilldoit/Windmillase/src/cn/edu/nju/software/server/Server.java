@@ -145,7 +145,7 @@ public class Server {
 				String lable=ta.getString(4);
 				Date starttime_temp=ta.getDate(5);
 				Date endtime_temp=ta.getDate(6);
-				boolean isdoing = ta.getBoolean(7);
+				String isdoing = ta.getString(7);
 				boolean isdone=ta.getBoolean(8);
 				boolean isdelete=ta.getBoolean(9);
 				String username=ta.getString(10);
