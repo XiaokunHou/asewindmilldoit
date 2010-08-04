@@ -82,15 +82,6 @@ public ArrayList<Contact> getContact(){
    }
    private void writeContact() {
 	// TODO Auto-generated method stub
-	/*int count=con.size();
-	try{
-	for(int i=0;i<count;i++){
-			ot.writeObject(con.get(i));
-	}
-		ot.close();
-	}catch(Exception e){
-		System.out.println("写入本地文件错误");
-	}*/
 	   try {
 		ot.writeObject(con);
 		ot.close();
@@ -128,7 +119,7 @@ public void uploadData(Object x,CollectBox box){
 	}//给服务器的数据
 	   SqlData sqldata=(SqlData) x;
 	   Operation operation=sqldata.getOperation();
-	   /*switch(operation){
+	   switch(operation){
 	   case DELETE:
 		   box.delete(sqldata);
 		   break;
@@ -137,16 +128,16 @@ public void uploadData(Object x,CollectBox box){
 		   break;
 	   case INSERT:
 		   box.add(sqldata);
-	   }  */
-	   //以上是给BOX的动态数据，GUI点击一个模式下分类，会调用BOX的setcurrent***()方法，然后有操作完成后调用uploadData(**);
-	   //每次模式切换时候，GUI会调用 BOX x=new Box(); x.setLocalDataControl(*);然后调用x.splitinto()，完成Box里面链表初始化
+	   }  
+	   //2.以上是给BOX的动态数据，GUI点击一个模式下分类，会调用BOX的setcurrent***()方法，然后有操作完成后调用uploadData(**);
+	   //1.每次模式切换时候，GUI会调用 BOX x=new Box(); x.setLocalDataControl(*);然后调用x.splitinto()，完成Box里面链表初始化
 	   //本地用户操作的同时uploadData
 	   //传给服务器Object
 	   //调用Switch(Operation);调用CollectBox的相关操作
 	   updateFiles(x);
    }
    public void updateFiles(Object x){
-	   //当一个操作完成后，更新本地文件即自己的链表
+	   //当一个操作完成后，更新本地文件和自己的链表
 	   if(x.getClass().getName().equals("cn.edu.nju.software.database.User")){
 		   try {
 			User newuser=(User)x;
@@ -154,14 +145,57 @@ public void uploadData(Object x,CollectBox box){
 			FileOutputStream outuser=new FileOutputStream(fileu);
 			ObjectOutputStream o=new ObjectOutputStream(outuser);
 			o.writeObject(x);
+			o.close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		 }
 	   }
 	   if(x.getClass().getName().equals("cn.edu.nju.software.database.Task")){
-		   
+		   Task task=(Task) x;
+		   switch(task.getOperation()){
+		   case DELETE:
+			   for(int i=0;i<tasks.size();i++){
+				   if(tasks.get(i).gettaskname().equals(task.gettaskname())){
+					   tasks.get(i).setisdelete(true);
+				   }
+			   }
+			   break;
+		   case UPDATE:
+			   for(int i=0;i<tasks.size();i++){
+				   if(tasks.get(i).gettaskname().equals(task.gettaskname())){
+					  tasks.set(i,task);
+				   }
+			   }
+			   break;
+		   case INSERT:
+			  tasks.add(task);
+			  break;
+		   }
 	   }
+	   if(x.getClass().getName().equals("cn.edu.nju.software.database.Contact")){
+		   Contact contact=(Contact) x;
+		   switch(contact.getOperation()){
+		   case DELETE:
+			   for(int i=0;i<con.size();i++){
+				   if(con.get(i).getcontactname().equals(contact.getcontactname())){
+					  con.remove(i);
+				   }
+			   }
+			   break;
+		   case UPDATE:
+			   for(int i=0;i<con.size();i++){
+				   if(con.get(i).getcontactname().equals(contact.getcontactname())){
+					  con.set(i,contact);
+				   }
+			   }
+			   break;
+		   case INSERT:
+			  con.add(contact);
+			  break;
+		   }
+	   }
+	   writeInFile();//写入文件中
    }
    public void emptyRubbish(){
 	   for(int x=0;x<tasks.size();x++){
@@ -169,6 +203,7 @@ public void uploadData(Object x,CollectBox box){
 			   tasks.remove(x);
 		   }
 	   }
+	   writeInFile();//更新文件
 	   //GUI清空垃圾箱的时候直接调用
 	   //当点击垃圾箱时，遍历Task，找isdelete为true的显示
    }
@@ -195,15 +230,6 @@ public void uploadData(Object x,CollectBox box){
    }
    private void readUser() {
 	// TODO Auto-generated method stub
-	  /*Object k=null;
-	  try{
-	while((k=in.readObject())!=null){
-		User ll=(User) k;
-		users.add(ll);
-	  }
-	  }catch(Exception x){
-		  System.out.println("读入本地文件错误");
-	  }*/
 	  Object k;
 	try {
 		k = in.readObject();
