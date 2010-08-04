@@ -11,7 +11,7 @@ import cn.edu.nju.software.database.Task;
 
 public class ProjectBox extends CollectBox{
 
-   ArrayList<Task> alltask;
+	public ArrayList<Task> alltask;
    LocalDataControl dc;
    ArrayList<String> pn = new ArrayList<String>(); //得到该用户的所有的项目名称
    ArrayList<Project> projects=new ArrayList<Project>();//根据BaseMode里的LocalDataControl取得ArrayList<Task>
@@ -51,7 +51,7 @@ public class ProjectBox extends CollectBox{
 			}
 			projects.add(m);
 		}
-		writeProjectInFile(); //写入文件
+	//	writeProjectInFile(); //写入文件
 	}
 	
 	
