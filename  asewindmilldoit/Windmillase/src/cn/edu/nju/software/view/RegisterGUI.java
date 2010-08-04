@@ -21,6 +21,11 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
+import cn.edu.nju.software.control.RegisterControl;
+import cn.edu.nju.software.control.Control.Operation;
+import cn.edu.nju.software.control.RegisterControl.Register;
+import cn.edu.nju.software.database.User;
+
 public class RegisterGUI extends JFrame{
 	
 	/**
@@ -64,7 +69,9 @@ public class RegisterGUI extends JFrame{
 	private boolean isUserRight = false;
 	private boolean isPwdRight = false;
 	private boolean isMailRight = false;
-	
+	//与RegisterControl 交互
+	RegisterControl recontrol=new RegisterControl();
+	boolean lo=false;//登陆或失败都会为true
 	
 	public RegisterGUI(LoginGUI lg1){
 		lg = lg1;
@@ -296,14 +303,17 @@ public class RegisterGUI extends JFrame{
 				char[] passwords = pwdText.getPassword();
 				String password = turnCharsToString(passwords);
 				String mailAddress = mailText.getText();
-				boolean b = true;
-				if(b){
-					lg.getFaultLabel().setText("注册成功，请登陆");
-					rg.dispose();
-					lg.setVisible(true);
-				}else{
-					JOptionPane.showMessageDialog(null, "用户名已存在，重新填写", "错误提示", JOptionPane.ERROR_MESSAGE);
-				}
+				//与Control交互
+				recontrol.reg=Register.WAITING;
+				User us=new User();
+				us.setInfo(name, password);
+				us.setuemail(mailAddress);
+				us.setOpration(Operation.INSERT);
+				recontrol.getRegister(us);
+				Thread x=new Thread(recontrol);
+				x.start();
+				Listener p=new Listener(rg);
+				p.start();
 			}
 			else{
 				JOptionPane.showMessageDialog(null, "内容存在错误，重新填写", "错误提示", JOptionPane.ERROR_MESSAGE);
@@ -354,4 +364,37 @@ public class RegisterGUI extends JFrame{
 			lg.setVisible(true);
 		}
 	}	
+	class Listener extends Thread{
+		RegisterGUI rg;
+		public Listener(RegisterGUI s){
+			rg=s;
+		}
+		public void run(){
+		while(true){
+			Register x=recontrol.reg;
+			switch(x){
+			case SUCCESS:
+				System.out.println("注册成功");
+				lg.getFaultLabel().setText("注册成功，请登陆");
+				rg.dispose();
+				lg.setVisible(true);
+				lo=true;
+				break;
+			case FAILED:
+				System.out.println("注册失败");
+				JOptionPane.showMessageDialog(null, "用户名已存在，重新填写", "错误提示", JOptionPane.ERROR_MESSAGE);
+				lo=true;
+				break;
+			case WAITING:
+				System.out.println("注册中");
+				lo=false;
+				break;
+			 }
+			if(lo){
+				break;
+			}
+			}
+		}
+	}
+	//Listener类为执行登陆后方法
 }
