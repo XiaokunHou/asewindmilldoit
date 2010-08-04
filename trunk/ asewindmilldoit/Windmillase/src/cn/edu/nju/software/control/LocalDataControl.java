@@ -15,6 +15,7 @@ public class LocalDataControl extends Control{
 	File fileu;
 	File filec;
 	File filet;
+	boolean datacomplete=false;
 	ObjectOutputStream ot;
 	ObjectInputStream in;//本地文件流
 	//三个数组可以给GUI直接调用，注GUI的各个BOX完成分类
@@ -223,20 +224,32 @@ public void updateLocalData(){
 		   try {
 			while((ko=input.readObject())!=null){
 				   String s=ko.getClass().getName();
-				   if(s=="cn.edu.nju.software.database.User"){
+				   if(s.equals("cn.edu.nju.software.database.User")){
 					   User o=(User) ko;
 					   users.add(o);
 				   }
-				   if(s=="cn.edu.nju.software.database.Contact"){
+				   if(s.equals("cn.edu.nju.software.database.Contact")){
 					   Contact kl=(Contact) ko;
 					   con.add(kl);
 				   }
-                   if(s=="cn.edu.nju.software.database.Task"){
+                   if(s.equals("cn.edu.nju.software.database.Task")){
 					   Task pp=(Task) ko;
 					   //System.out.println(pp.gettaskname()+"localdatacontrol");
 					   tasks.add(pp);
 				   }
+                   if(s.equals("java.lang.String")){
+                	   String respond=(String) ko;
+                	   if(respond.equals("datacomplete")){
+                	      System.out.println("接受数据完毕");
+                	      datacomplete=true;
+                	   }
+                   }
+                   if(datacomplete){
+                	   break;
+                	   }
+                   else{
                    writeInFile();
+                   }
 			   }
 			// writeInFile();
 			// input.close();

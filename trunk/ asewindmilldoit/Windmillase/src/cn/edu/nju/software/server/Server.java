@@ -102,6 +102,8 @@ public class Server {
     		  for(int i=0;i<usersize;i++){
     			  output.writeObject(listuser.get(i));
     		  }
+    		  String respond="datacomplete";
+    		  output.writeObject(respond);
     		  //以上为写入客户端缓存
     		  /*
     		   * 

@@ -153,6 +153,14 @@ public class Task extends SqlData implements Serializable{
 	
 	public void setisdoing(String isdoing){
 		this.isdoing=isdoing;
+		/*任务在收集箱时候  begintime=null,isdong="false";
+		 * 今日待办 begintime=今天，isdoing="true";
+		 * 明日待办 begintime=明日,isdoing="true"
+		 * 日程begintime=除今日明日的时间,isdoing="true"
+		 * 择日待办 begintime=null,isdoing="true";
+		 * 等待isdoing="false";
+		 * 
+		 */
 	}
 	
 	public boolean getisdone(){
