@@ -41,7 +41,9 @@ public class LocalDataControl extends Control{
 	   filec=new File("LocalData/contact.txt");
 	   filet=new File("LocalData/task.txt");
  }
-
+public boolean getDataComplete(){
+	return datacomplete;
+}
 public ArrayList<Contact> getContact(){
 	   return con;
    }
@@ -240,7 +242,7 @@ public void updateLocalData(){
                    if(s.equals("java.lang.String")){
                 	   String respond=(String) ko;
                 	   if(respond.equals("datacomplete")){
-                	      System.out.println("接受数据完毕");
+                	      //System.out.println("接受数据完毕");
                 	      datacomplete=true;
                 	   }
                    }
