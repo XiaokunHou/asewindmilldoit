@@ -120,10 +120,57 @@ public ArrayList<Contact> getContact(){
 		}
    }
 public void uploadData(Object x,CollectBox box){
-	
+	   try {
+		output.writeObject(x);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}//给服务器的数据
+	   SqlData sqldata=(SqlData) x;
+	   Operation operation=sqldata.getOperation();
+	   /*switch(operation){
+	   case DELETE:
+		   box.delete(sqldata);
+		   break;
+	   case UPDATE:
+		   box.edit(sqldata);//编辑和完成任务，本质都是修改相关属性然后UPDATE
+		   break;
+	   case INSERT:
+		   box.add(sqldata);
+	   }  */
+	   //以上是给BOX的动态数据，GUI点击一个模式下分类，会调用BOX的setcurrent***()方法，然后有操作完成后调用uploadData(**);
+	   //每次模式切换时候，GUI会调用 BOX x=new Box(); x.setLocalDataControl(*);然后调用x.splitinto()，完成Box里面链表初始化
 	   //本地用户操作的同时uploadData
 	   //传给服务器Object
 	   //调用Switch(Operation);调用CollectBox的相关操作
+	   updateFiles(x);
+   }
+   public void updateFiles(Object x){
+	   //当一个操作完成后，更新本地文件即自己的链表
+	   if(x.getClass().getName().equals("cn.edu.nju.software.database.User")){
+		   try {
+			User newuser=(User)x;
+			users.set(0, newuser);
+			FileOutputStream outuser=new FileOutputStream(fileu);
+			ObjectOutputStream o=new ObjectOutputStream(outuser);
+			o.writeObject(x);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		 }
+	   }
+	   if(x.getClass().getName().equals("cn.edu.nju.software.database.Task")){
+		   
+	   }
+   }
+   public void emptyRubbish(){
+	   for(int x=0;x<tasks.size();x++){
+		   if(tasks.get(x).getisdelete()){
+			   tasks.remove(x);
+		   }
+	   }
+	   //GUI清空垃圾箱的时候直接调用
+	   //当点击垃圾箱时，遍历Task，找isdelete为true的显示
    }
    public void setData(ArrayList<User> x){
 	   //测试代码
