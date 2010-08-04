@@ -20,7 +20,7 @@ public class DB {
 	           
 	            Class.forName("com.mysql.jdbc.Driver");
 	            
-	            cn = DriverManager.getConnection("jdbc:mysql://"+"127.0.0.1"+":3306"+"/gtdt","root","820417xcs");
+	            cn = DriverManager.getConnection("jdbc:mysql://"+"127.0.0.1"+":3306"+"/gtdt","root","123");
 	            
 	            cn.setCatalog("gtdt");
 	            System.out.println("数据库连接成功");
