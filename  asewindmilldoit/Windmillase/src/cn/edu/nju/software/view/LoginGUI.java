@@ -210,12 +210,10 @@ public class LoginGUI extends JFrame{
 			case SUCCESS:
 				System.out.println("登陆成功");
 				getFaultLabel().setText("");
-				System.out.println("更新用户数据");
+				//System.out.println("更新用户数据");
 				localcontrol=new LocalDataControl(control);
-				//System.out.println(us.getusername()+"更新");
 				localcontrol.setUser(us);
 				localcontrol.updateLocalData();
-				//new MainFrame();
 				lo=true;
 				break;
 			case FAILED:
@@ -231,8 +229,14 @@ public class LoginGUI extends JFrame{
 			 }
 			if(lo){
 				break;
+			  }
 			}
-			}
+		while(!localcontrol.getDataComplete()){
+			System.out.println("更新数据中");
+		  }
+		if(localcontrol.getDataComplete()){
+			System.out.println("更新完毕");
+		 }
 		}
 	}
 	//Listener类为执行登陆后方法
