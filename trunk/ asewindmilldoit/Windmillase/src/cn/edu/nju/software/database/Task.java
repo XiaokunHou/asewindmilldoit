@@ -10,7 +10,7 @@ public class Task extends SqlData implements Serializable{
 	private String tasklabel;
 	private String taskstarttime;
 	private String taskendtime;
-	private boolean isdoing;
+	private String isdoing;
 	private boolean isdone;
 	private boolean isdelete;
 	private String taskpriority;
@@ -25,13 +25,13 @@ public class Task extends SqlData implements Serializable{
 	 * Task类的构造函数
 	 */
 	public Task(int id,String taskname,String taskinformation,String tasklabel,
-				String taskstarttime,String taskendtime,boolean isdoing,boolean isdone,
+				String taskstarttime,String taskendtime,String isdoing,boolean isdone,
 				boolean isdelete,String taskpriority,String taskshared,String username,
 				String projectname,String scenename)
 	{
 		this.id=id;
 		this.isdelete=isdelete;
-		this.isdoing=isdone;
+		this.isdone=isdone;
 		this.isdoing=isdoing;
 		this.projectname=projectname;
 		this.scenename=scenename;
@@ -48,7 +48,7 @@ public class Task extends SqlData implements Serializable{
 	public Task(int id,String taskname,String username,String projectname,String scenename)
 {
 	this.id=id;
-	this.isdoing=isdone;
+	//this.isdoing=isdone;
 	this.projectname=projectname;
 	this.scenename=scenename;
 	this.taskname=taskname;
@@ -147,11 +147,11 @@ public class Task extends SqlData implements Serializable{
 		this.scenename=scenename;
 	}
 	
-	public boolean getisdoing(){
+	public String getisdoing(){
 		return isdoing;
 	}
 	
-	public void setisdoing(boolean isdoing){
+	public void setisdoing(String isdoing){
 		this.isdoing=isdoing;
 	}
 	
