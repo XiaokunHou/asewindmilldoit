@@ -63,28 +63,28 @@ public class TimeBox extends CollectBox{
 			String isdoing = tk.getisdoing();
 			//收集箱中的taskstarttime()为
 			if((Integer.parseInt(temp_year)==year)&&isdoing.equals("true")&&(Integer.parseInt(temp_month)==month)&&(Integer.parseInt(temp_day)== day)){
-						today.addTaskInpro(tk);
+						today.addTaskIntime(tk);
 					}
 			if((Integer.parseInt(temp_year)==year)&&isdoing.equals("true")&&(Integer.parseInt(temp_month)==month)&&(Integer.parseInt(temp_day)== (day+1))){
-						tomorrow.addTaskInpro(tk);
+						tomorrow.addTaskIntime(tk);
 					}
 			if((tk.gettaskstarttime().equals(null))&&isdoing.equals("true")){
-						schedule.addTaskInpro(tk);
+						option.addTaskIntime(tk);
 					}
 			if(isdoing.equals("false")){
-						wait.addTaskInpro(tk);
+						wait.addTaskIntime(tk);
 					}
 			//------------------------------------------
 			if((Integer.parseInt(temp_year)>year)&&isdoing.equals("true")){
-				option.addTaskInpro(tk);
+				schedule.addTaskIntime(tk);
 			}
 				
 			if((Integer.parseInt(temp_month)>month)&&isdoing.equals("true")){
-				option.addTaskInpro(tk);
+				schedule.addTaskIntime(tk);
 			}
 			
 			if((Integer.parseInt(temp_day)>(day+1))&&isdoing.equals("true")){
-				option.addTaskInpro(tk);
+				schedule.addTaskIntime(tk);
 			}
    		}
    	 	writeTimeInFile(); //写入文件
@@ -123,7 +123,7 @@ public class TimeBox extends CollectBox{
 public void add(SqlData x) {
 	// TODO Auto-generated method stub
 	Task tk = (Task)x;
-	currentTime.addTaskInpro(tk);
+	currentTime.addTaskIntime(tk);
 	writeTimeInFile();
 }
 
@@ -131,7 +131,7 @@ public void add(SqlData x) {
 public void complete(SqlData x) {
 	// TODO Auto-generated method stub
 	Task tk = (Task)x;
-	currentTime.completeTaskInpro(tk);
+	currentTime.completeTaskIntime(tk);
 	writeTimeInFile();
 }
 
@@ -139,7 +139,7 @@ public void complete(SqlData x) {
 public void delete(SqlData x) {
 	// TODO Auto-generated method stub
 	Task tk = (Task)x;
-	currentTime.deleteTaskInpro(tk);
+	currentTime.deleteTaskIntime(tk);
 	writeTimeInFile();
 }
 
@@ -147,7 +147,7 @@ public void delete(SqlData x) {
 public void edit(SqlData x) {
 	// TODO Auto-generated method stub
 	Task tk = (Task)x;
-	currentTime.editTaskInpro(tk);
+	currentTime.editTaskIntime(tk);
 	writeTimeInFile();
 }
 
