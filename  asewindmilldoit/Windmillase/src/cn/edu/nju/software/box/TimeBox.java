@@ -14,7 +14,7 @@ import cn.edu.nju.software.database.SqlData;
 import cn.edu.nju.software.database.Task;
 
 public class TimeBox extends CollectBox{
-    ArrayList<Task> alltask;
+    public ArrayList<Task> alltask = new ArrayList<Task>();
     LocalDataControl dc;
     ArrayList<Time> times=new ArrayList<Time>();//根据BaseMode里的LocalDataControl取得ArrayList<Task>
 	   //然后调用本类的spiltIntoTime()方法拆分成很多Time，加进这里
@@ -25,7 +25,7 @@ public class TimeBox extends CollectBox{
     
     Calendar c =Calendar.getInstance();
 	int year = c.get(Calendar.YEAR);
-	int month = c.get(Calendar.MONTH);
+	int month = c.get(Calendar.MONTH)+1;
 	int day = c.get(Calendar.DATE);
 	
 	public void setCurrentTime(Time t){
@@ -55,39 +55,52 @@ public class TimeBox extends CollectBox{
    	   		times.add(schedule);
    	   		times.add(option);
    	   		times.add(wait);
+   	   	   	//	System.out.println("add sucess");
+
    	for(Iterator<Task> it = alltask.iterator();it.hasNext();){
 			Task tk = it.next();
-   		String temp_year=tk.gettaskstarttime().substring(0, 3);
-			String temp_month=tk.gettaskstarttime().substring(4, 5);
-			String temp_day=tk.gettaskstarttime().substring(6, 7);
+			//System.out.print(tk.gettaskstarttime());
+			if(!(tk.gettaskstarttime().equals(null))){
+			int temp_year=Integer.parseInt(tk.gettaskstarttime().substring(0,4));
+			int temp_month=Integer.parseInt(tk.gettaskstarttime().substring(4,6));
+			int temp_day=Integer.parseInt(tk.gettaskstarttime().substring(6,8));
 			String isdoing = tk.getisdoing();
-			//收集箱中的taskstarttime()为
-			if((Integer.parseInt(temp_year)==year)&&isdoing.equals("true")&&(Integer.parseInt(temp_month)==month)&&(Integer.parseInt(temp_day)== day)){
+			//System.out.print(isdoing);
+			//收集箱中的taskstarttime()
+			if(temp_year==year && "true".equals(isdoing)&&(temp_month==month)&&(temp_day==day)){
+
 						today.addTaskIntime(tk);
 					}
-			if((Integer.parseInt(temp_year)==year)&&isdoing.equals("true")&&(Integer.parseInt(temp_month)==month)&&(Integer.parseInt(temp_day)== (day+1))){
+			if(temp_year==year && "true".equals(isdoing)&&(temp_month==month)&&(temp_day==(day+1))){
+						
 						tomorrow.addTaskIntime(tk);
+						//System.out.println("qs");
 					}
-			if((tk.gettaskstarttime().equals(null))&&isdoing.equals("true")){
+			if((tk.gettaskstarttime().equals(null))&&"true".equals(isdoing)){
 						option.addTaskIntime(tk);
 					}
-			if(isdoing.equals("false")){
+			
+			if("false".equals(isdoing)){
 						wait.addTaskIntime(tk);
 					}
 			//------------------------------------------
-			if((Integer.parseInt(temp_year)>year)&&isdoing.equals("true")){
+			if(temp_year>year && "true".equals(isdoing)){
+				//System.out.println("ds");
 				schedule.addTaskIntime(tk);
 			}
 				
-			if((Integer.parseInt(temp_month)>month)&&isdoing.equals("true")){
+			if(temp_month>month && "true".equals(isdoing)){
+				//System.out.println("ds");
 				schedule.addTaskIntime(tk);
 			}
 			
-			if((Integer.parseInt(temp_day)>(day+1))&&isdoing.equals("true")){
+			if(temp_day>(day+1) && "true".equals(isdoing)){
+				//System.out.println("ds");
 				schedule.addTaskIntime(tk);
 			}
+			}
    		}
-   	 	writeTimeInFile(); //写入文件
+   	 	//writeTimeInFile(); //写入文件
 	}
    public ArrayList<Time> getAllTime(){
 		//GUI可以通过此方法得到所有Time
@@ -124,7 +137,7 @@ public void add(SqlData x) {
 	// TODO Auto-generated method stub
 	Task tk = (Task)x;
 	currentTime.addTaskIntime(tk);
-	writeTimeInFile();
+	//writeTimeInFile();
 }
 
 @Override
@@ -132,7 +145,7 @@ public void complete(SqlData x) {
 	// TODO Auto-generated method stub
 	Task tk = (Task)x;
 	currentTime.completeTaskIntime(tk);
-	writeTimeInFile();
+	//writeTimeInFile();
 }
 
 @Override
@@ -140,7 +153,7 @@ public void delete(SqlData x) {
 	// TODO Auto-generated method stub
 	Task tk = (Task)x;
 	currentTime.deleteTaskIntime(tk);
-	writeTimeInFile();
+	//writeTimeInFile();
 }
 
 @Override
@@ -148,7 +161,7 @@ public void edit(SqlData x) {
 	// TODO Auto-generated method stub
 	Task tk = (Task)x;
 	currentTime.editTaskIntime(tk);
-	writeTimeInFile();
+	//writeTimeInFile();
 }
 
 @Override

@@ -14,7 +14,7 @@ import cn.edu.nju.software.database.SqlData;
 
 public class ContactBox extends CollectBox{
   
-	ArrayList<Contact> allcontact;
+	public ArrayList<Contact> allcontact = new ArrayList<Contact>();
 	LocalDataControl dc;
 	ArrayList<String> Lun = new ArrayList<String>(); //得到该用户的所有的联系人名称
 	ArrayList<Group> groups = new ArrayList<Group>();
@@ -24,7 +24,7 @@ public class ContactBox extends CollectBox{
 	public void setCurrentGroup(Group x){
 		//currentGroup=x;
 		for(int i=0;i<groups.size();i++){
-			if(groups.get(i).getContactName().equals(x.getContactName())){
+			if(groups.get(i).getGroupName().equals(x.getGroupName())){
 				currentGroup = groups.get(i);
 			}
 		}
@@ -33,26 +33,26 @@ public class ContactBox extends CollectBox{
 	public void spiltIntoGroup(){
 		for(Iterator<Contact> it = allcontact.iterator();it.hasNext();){
 			Contact tk = it.next();
-			String adder_username=tk.getadder_username();
-			while(!Lun.contains(adder_username)){
+			String groupname=tk.getgroupname();
+			while(!Lun.contains(groupname)){
 				//pn.add(j, projectname);
 				//j++;
-				Lun.add(adder_username);
+				Lun.add(groupname);
 			}
 		}
 		for(int i=0;i<Lun.size();i++){
 			Group g = new Group();
 			//m.setProjectName(Lun.get(i));
-			g.setContactName(Lun.get(i));
+			g.setGroupName(Lun.get(i));
 			for(Iterator<Contact> it = allcontact.iterator();it.hasNext();){
 				Contact tk = it.next();
-				if(tk.getadder_username().equals(g.getContactName())){
+				if(tk.getgroupname().equals(g.getGroupName())){
 					g.addContactInGroup(tk);
 				}
 			}
 			groups.add(g);
 		}
-		writeGroupInFile(); //写入文件
+		//writeGroupInFile(); //写入文件
 	}
 	
 	public ArrayList<Group> getAllGroup(){
@@ -91,7 +91,7 @@ public class ContactBox extends CollectBox{
 		// TODO Auto-generated method stub
 		Contact con = (Contact)x;
 		currentGroup.addContactInGroup(con);
-		writeGroupInFile();
+		//writeGroupInFile();
 	}
 
 	@Override
@@ -105,7 +105,7 @@ public class ContactBox extends CollectBox{
 		// TODO Auto-generated method stub
 		Contact con = (Contact)x;
 		currentGroup.deleteContactInGroup(con);
-		writeGroupInFile();
+		//writeGroupInFile();
 	}
 
 	@Override
@@ -113,7 +113,7 @@ public class ContactBox extends CollectBox{
 		// TODO Auto-generated method stub
 		Contact con = (Contact)x;
 		currentGroup.editContactInGroup(con);
-		writeGroupInFile();
+		//writeGroupInFile();
 	}
 
 	@Override

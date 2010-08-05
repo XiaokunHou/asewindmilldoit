@@ -14,6 +14,11 @@ public class Time {
 	   public void setTimeName(String x){
 		   timename=x;
 	   }
+	   
+	   public ArrayList<Task> getTaskIntime(){
+		   return tasks;
+	   }
+	   
 	   public void addTaskIntime(Task x){
 		   //add的时候可以直接tasks.add()
 		   tasks.add(x);

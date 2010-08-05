@@ -2,8 +2,15 @@ package cn.edu.nju.software.test;
 
 import java.util.ArrayList;
 
+import cn.edu.nju.software.box.ContactBox;
+import cn.edu.nju.software.box.Group;
 import cn.edu.nju.software.box.Project;
 import cn.edu.nju.software.box.ProjectBox;
+import cn.edu.nju.software.box.Scene;
+import cn.edu.nju.software.box.SceneBox;
+import cn.edu.nju.software.box.Time;
+import cn.edu.nju.software.box.TimeBox;
+import cn.edu.nju.software.database.Contact;
 import cn.edu.nju.software.database.Task;
 
 public class Test_box {
@@ -13,7 +20,54 @@ public class Test_box {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		ProjectBox pb = new ProjectBox();
+		//ProjectBox pb = new ProjectBox();
+		//SceneBox sb = new SceneBox();
+		TimeBox sb = new TimeBox();
+		/*
+		ContactBox cb = new ContactBox();
+		Contact ct1 = new Contact();
+		Contact ct2 = new Contact();
+		Contact ct3 = new Contact();
+		
+		ct1.setid(0);
+		ct1.setgroupname("mygroup");
+		ct1.setcontactname("秋水飞鹰");
+		ct1.setadder_username("cqiang");
+		ct1.setlocal_username("cyun");
+		
+		ct2.setid(1);
+		ct2.setgroupname("group two");
+		ct2.setcontactname("a sir");
+		ct2.setadder_username("henzhenjie");
+		ct2.setlocal_username("cyun");
+		
+		ct3.setid(2);
+		ct3.setgroupname("group two");
+		ct3.setcontactname("清风浪");
+		ct3.setadder_username("cyun");
+		ct3.setlocal_username("henzhenjie");
+		
+		cb.allcontact = new ArrayList<Contact>();
+		cb.allcontact.add(ct1);
+		cb.allcontact.add(ct2);
+		cb.allcontact.add(ct3);
+		
+		cb.spiltIntoGroup();
+		ArrayList<Group> groups =cb.getAllGroup();
+		
+		for(int i=0;i<groups.size();i++){
+			ArrayList<Contact> x=groups.get(i).getContactInGroup();
+			System.out.println(groups.get(i).getGroupName());
+			System.out.println("x的大小："+x.size());
+			for(int i1=0;i1<x.size();i1++){
+				System.out.println(x.get(i1).getgroupname());
+				System.out.println(x.get(i1).getcontactname());
+				System.out.println(x.get(i1).getlocal_username());
+				System.out.println("--------------");
+			}
+		}
+		*/
+		
 		Task tk1 = new Task();
 		Task tk2 = new Task();
 		Task tk3 = new Task();
@@ -168,19 +222,23 @@ public class Test_box {
 		tk5.gettaskpriority();
 		tk5.gettaskshared();
 		
-		pb.alltask = new ArrayList<Task>();
+		//pb.alltask = new ArrayList<Task>();
+		sb.alltask = new ArrayList<Task>();
 		
-		pb.alltask.add(tk1);
-		pb.alltask.add(tk2);
-		pb.alltask.add(tk3);
-		pb.alltask.add(tk4);
-		pb.alltask.add(tk5);
+		sb.alltask.add(tk1);
+		sb.alltask.add(tk2);
+		sb.alltask.add(tk3);
+		sb.alltask.add(tk4);
+		sb.alltask.add(tk5);
 		
-		pb.spiltIntoProject();
-		ArrayList<Project> projects=pb.getAllProject();
-		for(int i=0;i<projects.size();i++){
-			ArrayList<Task> x=projects.get(i).getTaskInpro();
-			System.out.println(projects.get(i).getProjectName());
+		sb.spiltIntoTime();
+		//ArrayList<Project> projects=pb.getAllProject();
+		ArrayList<Time> times= sb.getAllTime();
+		
+		for(int i=0;i<times.size();i++){
+			ArrayList<Task> x=times.get(i).getTaskIntime();
+			System.out.println(times.get(i).getTimeName());
+			System.out.println("x的大小："+x.size());
 			for(int i1=0;i1<x.size();i1++){
 				System.out.println(x.get(i1).gettaskname());
 				System.out.println(x.get(i1).gettaskinformation());
@@ -189,6 +247,7 @@ public class Test_box {
 			}
 		}
 		//System.out.print(b)
+	
 		
 	}
 
