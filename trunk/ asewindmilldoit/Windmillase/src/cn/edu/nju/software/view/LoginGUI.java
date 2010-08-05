@@ -224,7 +224,7 @@ public class LoginGUI extends JFrame{
 		        boolean  login= control.getLocalLogin(localcontrol,us);
 		      if(login){
 		    	setVisible(false);
-				new MainFrame();
+				new MainFrame().setLocalDataControl(localcontrol);
 				MainFrame.crd.first(MainFrame.mainPanel);
 		        }else
 		        {
@@ -296,7 +296,7 @@ public class LoginGUI extends JFrame{
 		if(localcontrol.getDataComplete()){
 			System.out.println("¸üÐÂÍê±Ï");
 			setVisible(false);
-			new MainFrame();
+			new MainFrame().setLocalDataControl(localcontrol);
 			MainFrame.crd.first(MainFrame.mainPanel);
 		 }
 		}
