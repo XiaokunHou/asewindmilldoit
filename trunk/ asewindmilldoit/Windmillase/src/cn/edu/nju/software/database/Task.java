@@ -15,6 +15,7 @@ public class Task extends SqlData implements Serializable{
 	private boolean isdelete;
 	private String taskpriority;
 	private String taskshared;
+	private String shared_username;
 	//-------------------------------------
 	private String username;
 	private String projectname;
@@ -27,7 +28,7 @@ public class Task extends SqlData implements Serializable{
 	public Task(int id,String taskname,String taskinformation,String tasklabel,
 				String taskstarttime,String taskendtime,String isdoing,boolean isdone,
 				boolean isdelete,String taskpriority,String taskshared,String username,
-				String projectname,String scenename)
+				String projectname,String scenename,String shared_username)
 	{
 		this.id=id;
 		this.isdelete=isdelete;
@@ -43,9 +44,10 @@ public class Task extends SqlData implements Serializable{
 		this.taskshared=taskshared;
 		this.taskstarttime=taskstarttime;
 		this.username=username;
+		this.shared_username=shared_username;
 	}
 	
-	public Task(int id,String taskname,String username,String projectname,String scenename)
+	public Task(int id,String taskname,String username,String projectname,String scenename,String shared_username)
 {
 	this.id=id;
 	//this.isdoing=isdone;
@@ -53,6 +55,7 @@ public class Task extends SqlData implements Serializable{
 	this.scenename=scenename;
 	this.taskname=taskname;
 	this.username=username;
+	this.shared_username=shared_username;
 }
 	
 	public Task() {
@@ -145,6 +148,14 @@ public class Task extends SqlData implements Serializable{
 	
 	public void setscenename(String scenename){
 		this.scenename=scenename;
+	}
+	
+	public String getshared_username(){
+		return shared_username;
+	}
+	
+	public void setshared_username(String shared_username){
+		this.shared_username=shared_username;
 	}
 	
 	public String getisdoing(){
