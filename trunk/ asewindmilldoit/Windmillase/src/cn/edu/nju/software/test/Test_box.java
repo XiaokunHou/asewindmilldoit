@@ -81,7 +81,7 @@ public class Test_box {
 		tk1.settasklabel(null);
 		tk1.settaskstarttime("20100805");
 		tk1.settaskendtime(null);
-		tk1.setisdoing(null);
+		tk1.setisdoing("true");
 		tk1.setisdone(true);
 		tk1.setisdelete(false);
 		tk1.setusername("cyun");
@@ -110,7 +110,7 @@ public class Test_box {
 		tk2.settasklabel(null);
 		tk2.settaskstarttime("20100805");
 		tk2.settaskendtime(null);
-		tk2.setisdoing(null);
+		tk2.setisdoing("true");
 		tk2.setisdone(false);
 		tk2.setisdelete(true);
 		tk2.setusername("cqian");
