@@ -2,6 +2,7 @@ package cn.edu.nju.software.control;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import cn.edu.nju.software.database.User;
 import cn.edu.nju.software.view.LoginGUI;
@@ -25,6 +26,15 @@ public class LoginControl extends Control implements Runnable{
 			e.printStackTrace();
 		}
 		return online;
+	}
+	public boolean getLocalLogin(LocalDataControl x,User u){
+		User user=x.getUser().get(0);
+		if(u.getusername().equals(user.getusername())&&u.getpassword().equals(user.getpassword())){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 	//外部GUI接口，点击登陆便调用这一方法
 	//login为true的话，GUI要显示登陆成功，读入缓存字样，并调用LocalDataControl的updateLocalData()方法
