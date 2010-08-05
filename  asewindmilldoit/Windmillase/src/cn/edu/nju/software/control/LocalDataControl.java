@@ -7,8 +7,10 @@ import cn.edu.nju.software.box.CollectBox;
 import cn.edu.nju.software.database.*;
 
 public class LocalDataControl extends Control{
+	boolean online=false;
 	User user;
 	private int uid;
+	ArrayList<SqlData> operations=new ArrayList<SqlData>();
 	private ArrayList<Contact> con;
 	private ArrayList<User> users;
 	private ArrayList<Task> tasks;
@@ -20,7 +22,7 @@ public class LocalDataControl extends Control{
 	ObjectInputStream in;//本地文件流
 	//三个数组可以给GUI直接调用，注GUI的各个BOX完成分类
    public LocalDataControl(LoginControl x){
-	   
+	   online=x.isOnline();
 	   output=x.output;
 	   input=x.input;
 	   con=new ArrayList<Contact>();
@@ -41,6 +43,9 @@ public class LocalDataControl extends Control{
 	   filec=new File("LocalData/contact.txt");
 	   filet=new File("LocalData/task.txt");
  }
+public void setOperationsforTest(ArrayList<SqlData> x){
+	this.operations=x;
+}
 public boolean getDataComplete(){
 	return datacomplete;
 }
@@ -111,13 +116,18 @@ public ArrayList<Contact> getContact(){
 		}
    }
 public void uploadData(Object x,CollectBox box){
+	
+	//与GUI交互，得到请求
+	if(this.online){
 	   try {
 		output.writeObject(x);
-	} catch (IOException e) {
+	   } catch (IOException e) {
 		// TODO Auto-generated catch block
-		e.printStackTrace();
+	 	e.printStackTrace();
+	  }
 	}//给服务器的数据
 	   SqlData sqldata=(SqlData) x;
+	   writeOperationInfile(sqldata);//将operations写入文件
 	   Operation operation=sqldata.getOperation();
 	   switch(operation){
 	   case DELETE:
@@ -136,7 +146,21 @@ public void uploadData(Object x,CollectBox box){
 	   //调用Switch(Operation);调用CollectBox的相关操作
 	   updateFiles(x);
    }
-   public void updateFiles(Object x){
+   public void writeOperationInfile(SqlData x) {
+	// TODO Auto-generated method stub
+	try{ 
+	 this.operations.add(x);
+	 File file=new File("LocalData/localoperation.txt");
+	 FileOutputStream out=new FileOutputStream(file);
+	 ObjectOutputStream ob=new ObjectOutputStream(out);
+	 ob.writeObject(operations);
+	 ob.close();
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+   }
+
+public void updateFiles(Object x){
 	   //当一个操作完成后，更新本地文件和自己的链表
 	   if(x.getClass().getName().equals("cn.edu.nju.software.database.User")){
 		   try {
@@ -200,6 +224,15 @@ public void uploadData(Object x,CollectBox box){
    public void emptyRubbish(){
 	   for(int x=0;x<tasks.size();x++){
 		   if(tasks.get(x).getisdelete()){
+			   tasks.get(x).setOpration(Operation.DELETE);
+			   if(this.online){
+				   try {
+					output.writeObject(tasks.get(x));
+				  } catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				  }
+			   }
 			   tasks.remove(x);
 		   }
 	   }
@@ -217,6 +250,11 @@ public void uploadData(Object x,CollectBox box){
 		FileInputStream ifu=new FileInputStream(fileu);
 		FileInputStream ift=new FileInputStream(filet);
 		FileInputStream ifc=new FileInputStream(filec);
+		File foperation=new File("LocalData/localoperation.txt");
+		FileInputStream op=new FileInputStream(foperation);
+		ObjectInputStream inoperation=new ObjectInputStream(op);
+		operations=(ArrayList<SqlData>) inoperation.readObject();
+		inoperation.close();
 		in=new ObjectInputStream(ifu);
 		readUser();
 		in=new ObjectInputStream(ift);
@@ -279,10 +317,29 @@ public void uploadData(Object x,CollectBox box){
 
 public void updateLocalData(){
 	   //第一次连网登陆的时候，从服务器读入数据完成本地缓存文件的出入,GUI调用
+	   upLoadOperation();
 	   requestSend();
 	   Income ji=new Income();
 	   ji.start();
    }
+public void upLoadOperation(){
+	try{
+		File file=new File("LocalData/localoperation.txt");
+		FileInputStream fi=new FileInputStream(file);
+	    ObjectInputStream ob=new ObjectInputStream(fi);
+	    Object sqldata=null;
+	    ArrayList<SqlData> operation=( ArrayList<SqlData>) ob.readObject();
+	    for(int i=0;i<operation.size();i++){
+	    	output.writeObject(operation.get(i));
+	    }
+	   ob.close();
+	   FileWriter writer=new FileWriter(file);
+	   writer.write("");//上传完毕后清空缓存文件
+	   writer.close();
+	}catch(Exception x){
+		x.printStackTrace();
+	}
+}
    public void requestSend(){
 		 //会发送String格式具体请求
 		 String request="init/"+user.getusername()+"/"+user.getpassword();
