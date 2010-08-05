@@ -248,7 +248,16 @@ public class CalendarPanel extends JPanel implements ActionListener,
 							+ 7].getText());
 					d = new Date(year - 1900, month - 1, date);
 					if(CalendarFlag.getFlag() == 0){
-						FileMode.getPeriod().setText("");
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+						Calendar cal=Calendar.getInstance(); 
+						cal.setTime(d); 
+						Calendar cloneCal = (Calendar) cal.clone();	//当前Calendar的一个克隆体
+						cloneCal.add(cal.DATE, -3);					//被选日期减去三天
+						String header = sdf.format(cloneCal.getTime()) + "—";
+						cloneCal.add(cal.DATE, 6);				//被选日期加上三天
+						header = header + sdf.format(cloneCal.getTime());
+						FileMode.getPeriod().setText(header);
+						
 					}
 					else if(CalendarFlag.getFlag() == 1) {
 						NewOreditpanel.getStart().setText(
