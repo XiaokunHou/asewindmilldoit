@@ -212,14 +212,27 @@ public class LoginGUI extends JFrame{
 		    online=	control.getLogin(us);
 		    if(online){
 		    	System.out.println("联网成功");
+		    	Thread x=new Thread(control);
+				x.start();
+				Listener p=new Listener();
+				p.start();
 		    }
 		    else{
-		    	System.out.println("联网失败，载入本地最近数据");
+		    	System.out.println("联网失败，开始本地登陆");
+		    	localcontrol=new LocalDataControl();
+		    	localcontrol.loadFromLocal();
+		        boolean  login= control.getLocalLogin(localcontrol,us);
+		      if(login){
+		    	setVisible(false);
+				new MainFrame();
+				MainFrame.crd.first(MainFrame.mainPanel);
+		        }else
+		        {
+		        	userText.setBorder(new LineBorder(Color.red,1));
+					getFaultLabel().setText("用户名密码不正确");
+		        }
 		    }
-			Thread x=new Thread(control);
-			x.start();
-			Listener p=new Listener();
-			p.start();
+			
 			/*boolean s = true;
 			if(s){
 				setVisible(false);
@@ -257,9 +270,6 @@ public class LoginGUI extends JFrame{
 			case SUCCESS:
 				System.out.println("登陆成功");
 				//getFaultLabel().setText("");
-				setVisible(false);
-				new MainFrame();
-				MainFrame.crd.first(MainFrame.mainPanel);
 				localcontrol=new LocalDataControl(control);
 				localcontrol.setUser(us);
 				localcontrol.updateLocalData();
@@ -285,6 +295,9 @@ public class LoginGUI extends JFrame{
 		  }
 		if(localcontrol.getDataComplete()){
 			System.out.println("更新完毕");
+			setVisible(false);
+			new MainFrame();
+			MainFrame.crd.first(MainFrame.mainPanel);
 		 }
 		}
 	}
