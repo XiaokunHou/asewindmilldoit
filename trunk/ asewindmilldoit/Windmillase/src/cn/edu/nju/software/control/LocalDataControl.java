@@ -333,9 +333,15 @@ public void upLoadOperation(){
 	    	output.writeObject(operation.get(i));
 	    }
 	   ob.close();
-	   FileWriter writer=new FileWriter(file);
+	  /* FileWriter writer=new FileWriter(file);
 	   writer.write("");//上传完毕后清空缓存文件
-	   writer.close();
+	   writer.close();*/
+	   ArrayList<SqlData> empty=new ArrayList<SqlData>();
+	   File emptyfile=new File("LocalData/localoperation.txt");
+	   FileOutputStream emptyout=new FileOutputStream(emptyfile);
+	   ObjectOutputStream em=new ObjectOutputStream(emptyout);
+	   em.writeObject(empty);
+	   em.close();
 	}catch(Exception x){
 		x.printStackTrace();
 	}
