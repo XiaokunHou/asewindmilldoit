@@ -13,7 +13,7 @@ import cn.edu.nju.software.database.SqlData;
 import cn.edu.nju.software.database.Task;
 
 public class SceneBox extends CollectBox{
-	 ArrayList<Task> alltask;
+	public ArrayList<Task> alltask;
 	 LocalDataControl dc;
 	 ArrayList<String> sn = new ArrayList<String>(); //得到用户的所有情景名称
 	 ArrayList<Scene> scenes=new ArrayList<Scene>();//根据BaseMode里的LocalDataControl取得ArrayList<Task>
@@ -51,7 +51,7 @@ public class SceneBox extends CollectBox{
 				}
 				scenes.add(s);
 			}
-			writeSceneInFile(); //写入文件
+			//writeSceneInFile(); //写入文件
 		}
 		public ArrayList<Scene> getAllScene(){
 			//GUI可以通过此方法得到所有Scene
@@ -67,7 +67,7 @@ public class SceneBox extends CollectBox{
 				x.writeObject(scenes);
 				x.close();
 			 }catch(Exception x){
-				 System.out.println("写入文件错误");
+				 x.printStackTrace();
 			 }
 			}
 		
@@ -90,7 +90,7 @@ public class SceneBox extends CollectBox{
 			// TODO Auto-generated method stub
 			Task tk = (Task)x;
 			currentScene.addTaskInScene(tk);
-			writeSceneInFile();
+			//writeSceneInFile();
 			
 		}
 		@Override
@@ -98,21 +98,21 @@ public class SceneBox extends CollectBox{
 			// TODO Auto-generated method stub
 			Task tk = (Task)x;
 			currentScene.completeTaskInScene(tk);
-			writeSceneInFile();
+			//writeSceneInFile();
 		}
 		@Override
 		public void delete(SqlData x) {
 			// TODO Auto-generated method stub
 			Task tk = (Task)x;
 			currentScene.deleteTaskInScene(tk);
-			writeSceneInFile();
+			//writeSceneInFile();
 		}
 		@Override
 		public void edit(SqlData x) {
 			// TODO Auto-generated method stub
 			Task tk = (Task)x;
 			currentScene.editTaskInScene(tk);
-			writeSceneInFile();
+			//writeSceneInFile();
 		}
 		@Override
 		public void setLocalDataControl(LocalDataControl x) {

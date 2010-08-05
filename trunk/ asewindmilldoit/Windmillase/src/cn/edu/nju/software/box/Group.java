@@ -10,13 +10,17 @@ public class Group {
   	String groupName; //·Ö×éÃû×Ö
   	int index;
   	
-  	public String getContactName(){
+  	public String getGroupName(){
   		return groupName;
   	}
   	
-  	public void setContactName(String x){
+  	public void setGroupName(String x){
   		groupName=x;
   	}
+  	
+  	public ArrayList<Contact> getContactInGroup(){
+		   return cons;
+	   }
   	
   	public void addContactInGroup(Contact x){
   		cons.add(x);
@@ -24,7 +28,7 @@ public class Group {
   	
   	public void deleteContactInGroup(Contact x){
   		for(int i=0;i<cons.size();i++){
-  			if(cons.get(i).getcontactname().equals(x.getcontactname())){
+  			if(cons.get(i).getadder_username().equals(x.getadder_username())){
   				cons.remove(i);
   			}
   		}
@@ -32,7 +36,7 @@ public class Group {
   	
   	public void editContactInGroup(Contact x){
   		for(int i=0;i<cons.size();i++){
-  			if(cons.get(i).getcontactname().equals(x.getcontactname())){
+  			if(cons.get(i).getadder_username().equals(x.getadder_username())){
   				cons.set(i, x);
   			}
   		}

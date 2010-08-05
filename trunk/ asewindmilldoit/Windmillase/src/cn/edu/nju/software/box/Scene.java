@@ -14,6 +14,11 @@ public class Scene {
 	public void setSceneName(String x){
 		   scenename=x;
 	}
+	
+	public ArrayList<Task> getTaskInScene(){
+		   return tasks;
+	   }	
+	
 	   public void addTaskInScene(Task x){
 		  
 		   //add的时候可以直接tasks.add()

@@ -92,7 +92,7 @@ public class ProjectBox extends CollectBox{
 		// TODO Auto-generated method stub
 		Task tk = (Task)x;
 		currentProject.addTaskInpro(tk);
-		writeProjectInFile();
+		//writeProjectInFile();
 		
 	}
 	@Override
@@ -100,21 +100,21 @@ public class ProjectBox extends CollectBox{
 		// TODO Auto-generated method stub
 		Task tk = (Task)x;
 		currentProject.completeTaskInpro(tk);
-		writeProjectInFile();
+		//writeProjectInFile();
 	}
 	@Override
 	public void delete(SqlData x) {
 		// TODO Auto-generated method stub
 		Task tk = (Task)x;
 		currentProject.deleteTaskInpro(tk);
-		writeProjectInFile();
+		//writeProjectInFile();
 	}
 	@Override
 	public void edit(SqlData x) {
 		// TODO Auto-generated method stub
 		Task tk = (Task)x;
 		currentProject.editTaskInpro(tk);
-		writeProjectInFile();
+		//writeProjectInFile();
 	}
 	@Override
 	public void setLocalDataControl(LocalDataControl x) {
