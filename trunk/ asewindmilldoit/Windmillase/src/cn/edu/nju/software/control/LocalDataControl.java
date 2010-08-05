@@ -285,7 +285,7 @@ public void updateLocalData(){
    }
    public void requestSend(){
 		 //会发送String格式具体请求
-		 String request="init/"+user.getusername();
+		 String request="init/"+user.getusername()+"/"+user.getpassword();
 		 try {
 			output.writeObject(request);
 		} catch (IOException e) {
