@@ -16,11 +16,16 @@ public class Test_box {
 		ProjectBox pb = new ProjectBox();
 		Task tk1 = new Task();
 		Task tk2 = new Task();
+		Task tk3 = new Task();
+		Task tk4 = new Task();
+		Task tk5 = new Task();
+		//Task tk6 = new Task();
+		
 		tk1.setid(0);
 		tk1.settaskname("ss");
 		tk1.settaskinformation(null);
 		tk1.settasklabel(null);
-		tk1.settaskstarttime(null);
+		tk1.settaskstarttime("20100805");
 		tk1.settaskendtime(null);
 		tk1.setisdoing(null);
 		tk1.setisdone(true);
@@ -49,7 +54,7 @@ public class Test_box {
 		tk2.settaskname("aa");
 		tk2.settaskinformation(null);
 		tk2.settasklabel(null);
-		tk2.settaskstarttime(null);
+		tk2.settaskstarttime("20100805");
 		tk2.settaskendtime(null);
 		tk2.setisdoing(null);
 		tk2.setisdone(false);
@@ -74,15 +79,114 @@ public class Test_box {
 		tk2.gettaskpriority();
 		tk2.gettaskshared();
 		
+		
+		tk3.setid(2);
+		tk3.settaskname("se");
+		tk3.settaskinformation(null);
+		tk3.settasklabel(null);
+		tk3.settaskstarttime("20100806");
+		tk3.settaskendtime(null);
+		tk3.setisdoing("true");
+		tk3.setisdone(false);
+		tk3.setisdelete(true);
+		tk3.setusername("cyun");
+		tk3.setprojectname("project one");
+		tk3.setscenename("scene two");
+		tk3.settaskpriority(null);
+		tk3.settaskshared(null);
+		
+		tk3.gettaskname();
+		tk3.gettaskinformation();
+		tk3.gettasklabel();
+		tk3.gettaskstarttime();
+		tk3.gettaskendtime();
+		tk3.getisdoing();
+		tk3.getisdone();
+		tk3.getisdelete();
+		tk3.getusername();
+		tk3.getprojectname();
+		tk3.getscenename();
+		tk3.gettaskpriority();
+		tk3.gettaskshared();
+		
+		tk4.setid(3);
+		tk4.settaskname("tingke");
+		tk4.settaskinformation(null);
+		tk4.settasklabel(null);
+		tk4.settaskstarttime("20100806");
+		tk4.settaskendtime(null);
+		tk4.setisdoing("false");
+		tk4.setisdone(false);
+		tk4.setisdelete(true);
+		tk4.setusername("cqian");
+		tk4.setprojectname("project two");
+		tk4.setscenename("scene one");
+		tk4.settaskpriority(null);
+		tk4.settaskshared(null);
+		
+		tk4.gettaskname();
+		tk4.gettaskinformation();
+		tk4.gettasklabel();
+		tk4.gettaskstarttime();
+		tk4.gettaskendtime();
+		tk4.getisdoing();
+		tk4.getisdone();
+		tk4.getisdelete();
+		tk4.getusername();
+		tk4.getprojectname();
+		tk4.getscenename();
+		tk4.gettaskpriority();
+		tk4.gettaskshared();
+		
+		
+		tk5.setid(4);
+		tk5.settaskname("fuckyou");
+		tk5.settaskinformation(null);
+		tk5.settasklabel(null);
+		tk5.settaskstarttime("20100821");
+		tk5.settaskendtime(null);
+		tk5.setisdoing("true");
+		tk5.setisdone(false);
+		tk5.setisdelete(true);
+		tk5.setusername("cyun");
+		tk5.setprojectname("project three");
+		tk5.setscenename("scene two");
+		tk5.settaskpriority(null);
+		tk5.settaskshared(null);
+		
+		tk5.gettaskname();
+		tk5.gettaskinformation();
+		tk5.gettasklabel();
+		tk5.gettaskstarttime();
+		tk5.gettaskendtime();
+		tk5.getisdoing();
+		tk5.getisdone();
+		tk5.getisdelete();
+		tk5.getusername();
+		tk5.getprojectname();
+		tk5.getscenename();
+		tk5.gettaskpriority();
+		tk5.gettaskshared();
+		
 		pb.alltask = new ArrayList<Task>();
 		
 		pb.alltask.add(tk1);
 		pb.alltask.add(tk2);
+		pb.alltask.add(tk3);
+		pb.alltask.add(tk4);
+		pb.alltask.add(tk5);
 		
 		pb.spiltIntoProject();
 		ArrayList<Project> projects=pb.getAllProject();
 		for(int i=0;i<projects.size();i++){
+			ArrayList<Task> x=projects.get(i).getTaskInpro();
 			System.out.println(projects.get(i).getProjectName());
+			for(int i1=0;i1<x.size();i1++){
+				System.out.println(x.get(i1).gettaskname());
+				System.out.println(x.get(i1).gettaskinformation());
+				System.out.println(x.get(i1).getscenename());
+				System.out.println("--------------");
+			}
 		}
 		//System.out.print(b)
 		

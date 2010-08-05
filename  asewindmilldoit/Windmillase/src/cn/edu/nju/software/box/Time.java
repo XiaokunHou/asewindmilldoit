@@ -17,33 +17,32 @@ public class Time {
 	   public void addTaskIntime(Task x){
 		   //add的时候可以直接tasks.add()
 		   tasks.add(x);
-		   findTask(x);
-		   tasks.get(index).setisdelete(true);
 	   }
 	   public void deleteTaskIntime(Task x){
 		   //Task的delete属性为True，即塞入垃圾箱
 		   //调用findTask()然后从tasks中删除
-		   findTask(x);
-		   tasks.get(index).setisdelete(true);
+		   for(int i=0;i<tasks.size();i++){
+	 			if(tasks.get(i).getid()==x.getid()){
+	 				tasks.get(i).setisdelete(true);
+	 			}
+	 		}
 	   }
 	   public void editTaskIntime(Task x){
 		   //编辑Task，修改
 		 //调用findTask()然后从tasks中修改
-		   findTask(x);
-		   tasks.get(index).setprojectname(x.getprojectname());
-		   tasks.get(index).setscenename(x.getscenename());
-		   tasks.get(index).settaskendtime(x.gettaskendtime());
-		   tasks.get(index).settaskinformation(x.gettaskinformation());
-		   tasks.get(index).settasklabel(x.gettasklabel());
-		   tasks.get(index).settaskname(x.gettaskname());
-		   tasks.get(index).settaskpriority(x.gettaskpriority());
-		   tasks.get(index).settaskshared(x.gettaskshared());
-		   tasks.get(index).settaskstarttime(x.gettaskstarttime());
+		   for(int i=0;i<tasks.size();i++){
+				if(tasks.get(i).getid()==x.getid()){
+					tasks.set(i, x);
+				}
+			}
 	   }
 	   public void completeTaskIntime(Task x){
 		 //调用findTask()然后从tasks中找到然后设置他的hasdone为true
-		   findTask(x);
-		   tasks.get(index).setisdone(true);
+		   for(int i=0;i<tasks.size();i++){
+				if(tasks.get(i).getid()==x.getid()){
+					tasks.get(i).setisdone(true);
+				}
+			}
 	   }
 	   public int findTask(Task x){
 		   //根据Task的name找到tasks中的所在Task并return
