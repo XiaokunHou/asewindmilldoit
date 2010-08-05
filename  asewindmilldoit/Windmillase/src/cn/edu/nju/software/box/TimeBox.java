@@ -60,7 +60,7 @@ public class TimeBox extends CollectBox{
    	for(Iterator<Task> it = alltask.iterator();it.hasNext();){
 			Task tk = it.next();
 			//System.out.print(tk.gettaskstarttime());
-			if(!(tk.gettaskstarttime().equals(null))){
+			if((tk.gettaskstarttime()!=null)){
 			int temp_year=Integer.parseInt(tk.gettaskstarttime().substring(0,4));
 			int temp_month=Integer.parseInt(tk.gettaskstarttime().substring(4,6));
 			int temp_day=Integer.parseInt(tk.gettaskstarttime().substring(6,8));
