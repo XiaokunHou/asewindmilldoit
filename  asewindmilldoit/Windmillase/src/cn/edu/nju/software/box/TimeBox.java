@@ -65,11 +65,14 @@ public class TimeBox extends CollectBox{
 			int temp_month=Integer.parseInt(tk.gettaskstarttime().substring(4,6));
 			int temp_day=Integer.parseInt(tk.gettaskstarttime().substring(6,8));
 			String isdoing = tk.getisdoing();
-			//System.out.print(isdoing);
+		//	System.out.println(temp_year);
+		//	System.out.println(temp_month);
+		//	System.out.println(temp_day);
 			//收集箱中的taskstarttime()
-			if(temp_year==year && "true".equals(isdoing)&&(temp_month==month)&&(temp_day==day)){
+			if(temp_year==year && "true".equals(isdoing)&&(temp_month==month)&& temp_day==day){
 
 						today.addTaskIntime(tk);
+						//System.out.println("添加成功了");
 					}
 			if(temp_year==year && "true".equals(isdoing)&&(temp_month==month)&&(temp_day==(day+1))){
 						
