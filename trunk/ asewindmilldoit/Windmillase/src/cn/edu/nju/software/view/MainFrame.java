@@ -6,6 +6,8 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import cn.edu.nju.software.control.LocalDataControl;
+
 public class MainFrame extends JFrame {
 
 	/**
@@ -18,9 +20,12 @@ public class MainFrame extends JFrame {
 	//表明处于哪种模式下，有对应的get和set方法,ModeType是枚举类型
 	public static JPanel mainPanel = new JPanel();	//最靠近框架的一层面板(JPanel)
 	public static CardLayout crd = new CardLayout(0, 0);
-	
+	LocalDataControl localcontrol;
+	public void setLocalDataControl(LocalDataControl x){
+		localcontrol=x;
+	}
 	public MainFrame() {
-		
+		//localcontrol=control;
 		Dimension dms = this.getToolkit().getScreenSize();
 		int w = dms.width;
 		int h = dms.height;
@@ -58,8 +63,12 @@ public class MainFrame extends JFrame {
 	}
 
 	public static void main(String args[]) {
-		new MainFrame();
+		new MainFrame().go();
 		crd.first(mainPanel);
+	}
+	private void go() {
+		// TODO Auto-generated method stub
+		setLocalDataControl(localcontrol);
 	}
 	
 }
