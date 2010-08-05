@@ -58,10 +58,11 @@ public class Server {
     			System.out.println("建立输入输出流错误");
     		}
     	}
-    	public void clientDeal(String username){
+    	public void clientDeal(String username,String password){
     		//int x=Integer.parseInt(uid);
     		User user=new User();
     		user.setusername(username);
+    		user.setpassword(password);
     		DataBaseContact con=new DataBaseContact();
     		DataBaseTask task=new DataBaseTask();
     		DataBaseUser ufac=new DataBaseUser();
@@ -87,7 +88,7 @@ public class Server {
     		  while(us.next()){
     			  //把数据库中相关联的任务初始化出来，这里的ResultSet中的列值
     			  User ll=creatUser(us);
-    			  //System.out.println(m.getgroupname()+"contact");
+    			  System.out.println(ll.getunickname()+"user");
     			  listuser.add(ll);
     		  }
     		  int consize=listcon.size();
@@ -253,7 +254,7 @@ public class Server {
 						String s=(String) ob;
 					    String [] x=s.split("/");
 						if(x[0].equals("init")){
-							clientDeal(x[1]);//给Client的本地缓存
+							clientDeal(x[1],x[2]);//给Client的本地缓存
 						}
 					}
 					else{
