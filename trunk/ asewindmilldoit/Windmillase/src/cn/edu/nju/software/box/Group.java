@@ -7,15 +7,15 @@ import cn.edu.nju.software.database.Task;
 
 public class Group {
   	ArrayList<Contact> cons = new ArrayList<Contact>();
-  	String adder_username; //联系人名字
+  	String groupName; //分组名字
   	int index;
   	
   	public String getContactName(){
-  		return adder_username;
+  		return groupName;
   	}
   	
   	public void setContactName(String x){
-  		adder_username=x;
+  		groupName=x;
   	}
   	
   	public void addContactInGroup(Contact x){
@@ -23,16 +23,24 @@ public class Group {
   	}
   	
   	public void deleteContactInGroup(Contact x){
-  		//findContact(x);
-  		cons.remove(x);
+  		for(int i=0;i<cons.size();i++){
+  			if(cons.get(i).getcontactname().equals(x.getcontactname())){
+  				cons.remove(i);
+  			}
+  		}
   	}
   	
   	public void editContactInGroup(Contact x){
-  		findContact(x);
+  		for(int i=0;i<cons.size();i++){
+  			if(cons.get(i).getcontactname().equals(x.getcontactname())){
+  				cons.set(i, x);
+  			}
+  		}
+  		/*findContact(x);
   		cons.get(index).setadder_username(x.getadder_username());
   		cons.get(index).setcontactname(x.getcontactname());
   		cons.get(index).setgroupname(x.getgroupname());
-  		cons.get(index).setlocal_username(x.getlocal_username()); //也可以不需要
+  		cons.get(index).setlocal_username(x.getlocal_username()); //也可以不需要*/
   	}
   	
   	 public int findContact(Contact x){

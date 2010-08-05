@@ -12,6 +12,9 @@ public class Project {
    public String getProjectName(){
 	   return projectname;
    }
+   public ArrayList<Task> getTaskInpro(){
+	   return tasks;
+   }
    public void setProjectName(String x){
 	   projectname=x;
    }
@@ -23,34 +26,38 @@ public class Project {
 	   //Task的delete属性为True，即塞入垃圾箱
 	   //调用findTask()然后从tasks中删除
 	  // x.setisdelete(true);
-	   findTask(x);
-	   tasks.get(index).setisdelete(true);
-	   //tasks.remove(x);
+	   for(int i=0;i<tasks.size();i++){
+ 			if(tasks.get(i).getid()==x.getid()){
+ 				tasks.get(i).setisdelete(true);
+ 			}
+ 		}
    }
    public void editTaskInpro(Task x){ //使用的是浅拷贝
 	   //编辑Task，修改
 	 //调用findTask()然后从tasks中修改
-	   findTask(x);
-	   tasks.get(index).setprojectname(x.getprojectname());
-	   tasks.get(index).setscenename(x.getscenename());
-	   tasks.get(index).settaskendtime(x.gettaskendtime());
-	   tasks.get(index).settaskinformation(x.gettaskinformation());
-	   tasks.get(index).settasklabel(x.gettasklabel());
-	   tasks.get(index).settaskname(x.gettaskname());
-	   tasks.get(index).settaskpriority(x.gettaskpriority());
-	   tasks.get(index).settaskshared(x.gettaskshared());
-	   tasks.get(index).settaskstarttime(x.gettaskstarttime());
+	   for(int i=0;i<tasks.size();i++){
+			if(tasks.get(i).getid()==x.getid()){
+				tasks.set(i, x);
+			}
+		}
+	   
    }
    public void completeTaskInpro(Task x){ //使用的是浅拷贝
 	 //调用findTask()然后从tasks中找到然后设置他的hasdone为true
-	   findTask(x);
-	   tasks.get(index).setisdone(true);
+	   for(int i=0;i<tasks.size();i++){
+			if(tasks.get(i).getid()==x.getid()){
+				tasks.get(i).setisdone(true);
+			}
+		}
    }
    
-   public void removeTaskFrompro(Task x){
-	   //findTask(x);
-	   tasks.remove(x);
-   }
+   /*public void removeTaskFrompro(Task x){
+	   for(int i=0;i<tasks.size();i++){
+			if(tasks.get(i).getid()==x.getid()){
+				tasks.set(i, x);
+			}
+		}
+   }*/
    
    public int findTask(Task x){
 	   //根据Task的name找到tasks中的所在Task并return
